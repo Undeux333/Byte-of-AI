@@ -11,7 +11,7 @@ TWITTER_ACCESS_TOKEN      = os.getenv("TWITTER_ACCESS_TOKEN", "")
 TWITTER_ACCESS_TOKEN_SECRET = os.getenv("TWITTER_ACCESS_TOKEN_SECRET", "")
 
 # ── Gemini ────────────────────────────────────────────────────────────────
-GEMINI_MODEL   = "gemini-2.0-flash"
+GEMINI_MODEL   = "gemini-3.1-flash-lite"
 BUZZ_THRESHOLD = 68
 
 # ── 収集間隔 ──────────────────────────────────────────────────────────────
