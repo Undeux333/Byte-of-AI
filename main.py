@@ -38,7 +38,7 @@ def run():
             sm.mark_seen(state, s["url"])
 
         if stories:
-            candidates = scorer.score_all(stories)
+            candidates = scorer.score_all(stories, top_n=4)
             for c in candidates:
                 sm.add_to_queue(state, {
                     "main_tweet":        c["main_tweet"],
