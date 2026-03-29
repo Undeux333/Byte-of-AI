@@ -1,5 +1,5 @@
 {
-  "last_collected": null,
+  "last_collected": "2026-03-29T15:50:10.830818+00:00",
   "seen_urls": [
     "https://www.bbc.com/news/articles/c5y969pnxgvo?at_medium=RSS&at_campaign=rss",
     "https://www.bbc.com/news/articles/cp86yrq5jy7o?at_medium=RSS&at_campaign=rss",
@@ -162,12 +162,33 @@
     "https://www.bmj.com/content/387/bmj-2024-082194",
     "https://thereallo.dev/blog/decompiling-the-white-house-app",
     "https://twitter.com/BoWang87/status/2037648937453232504",
-    "https://www.youtube.com/watch?v=lXxmIw9axWw"
+    "https://www.youtube.com/watch?v=lXxmIw9axWw",
+    "https://www.bbc.com/news/articles/cd9v234j2v7o?at_medium=RSS&at_campaign=rss",
+    "https://www.bbc.com/news/articles/c937n0yxggeo?at_medium=RSS&at_campaign=rss",
+    "https://www.aljazeera.com/news/2026/3/29/houthis-open-new-front-in-iran-war-will-yemeni-group-block-bab-al-mandeb?traffic_source=rss",
+    "https://github.com/austin-weeks/miasma"
   ],
-  "queue": [],
+  "queue": [
+    {
+      "tweet": "Someone tried to bomb a Bank of America in Paris. Honestly, I get the sentiment, but maybe pick a bank that isn't already doing a good enough job bankrupting itself. Rough strategy.\nhttps://tinyurl.com/27u5mrdb",
+      "buzz_score": 85,
+      "original_title": "Three arrested in Paris after attempted bomb attack outside Bank of America",
+      "url": "https://www.bbc.com/news/articles/cd9v234j2v7o?at_medium=RSS&at_campaign=rss",
+      "source": "BBC World",
+      "category": "world"
+    },
+    {
+      "tweet": "There is now a tool that traps AI scrapers in an infinite loop of garbage. We are finally using our collective brainpower to break the internet instead of fixing it. Truly a peak move.\nhttps://tinyurl.com/2952or5b",
+      "buzz_score": 75,
+      "original_title": "Miasma: A tool to trap AI web scrapers in an endless poison pit",
+      "url": "https://github.com/austin-weeks/miasma",
+      "source": "HackerNews",
+      "category": "tech"
+    }
+  ],
   "stats": {
     "total_posted": 0,
-    "total_collected": 0,
+    "total_collected": 2,
     "last_posted": null
   }
 }
