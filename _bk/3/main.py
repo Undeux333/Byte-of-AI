@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
-# main.py — メインパイプライン（本投稿のみ・画像なし）
-
+"""
+main.py — GitHub Actions から呼ばれるメインパイプライン
+・収集が必要なら → collect & score → キューに追加
+・キューに記事があれば → 画像生成 → 本投稿 + 引用RT
+"""
 import sys
 from datetime import datetime, timezone
 
 import state_manager as sm
 import fetchers
 import scorer
+import image_gen
 import poster
 from config import COLLECTION_INTERVAL_HOURS
 
@@ -29,20 +33,24 @@ def run():
         print(f"\n[Pipeline] Collection needed. Running...\n")
 
         stories = fetchers.collect_all(state)
+
         for s in stories:
             sm.mark_seen(state, s["url"])
 
         if stories:
-            # top_n=2：2時間ごとの収集で1時間おきに1件投稿するため2件生成
-            candidates = scorer.score_all(stories, top_n=2)
+            candidates = scorer.score_all(stories, top_n=4)
             for c in candidates:
                 sm.add_to_queue(state, {
-                    "tweet":          c["tweet"],
-                    "buzz_score":     c.get("buzz_score", 0),
-                    "original_title": c.get("original_title", ""),
-                    "url":            c.get("url", ""),
-                    "source":         c.get("source", ""),
-                    "category":       c.get("category", "other"),
+                    "main_tweet":        c["main_tweet"],
+                    "sub_tweet":         c["sub_tweet"],
+                    "headline":          c.get("headline", c["original_title"][:60]),
+                    "simple_explanation":c.get("simple_explanation", ""),
+                    "emoji":             c.get("emoji", "📰"),
+                    "color_hex":         c.get("color_hex", "#2C3E50"),
+                    "category":          c.get("category", "other"),
+                    "source":            c.get("source", ""),
+                    "url":               c.get("url", ""),
+                    "buzz_score":        c.get("buzz_score", 0),
                 })
             state["stats"]["total_collected"] = \
                 state["stats"].get("total_collected", 0) + len(candidates)
@@ -61,18 +69,34 @@ def run():
         sm.save(state)
         return
 
-    print(f"[Pipeline] Posting next item...")
-    print(f"  Tweet: {item['tweet'][:100]}...")
+    print(f"[Pipeline] Posting next item (score={item['buzz_score']})...")
+    print(f"  Main : {item['main_tweet']}")
+    print(f"  Sub  : {item['sub_tweet']}")
+
+    # 画像生成
+    img_path = image_gen.create_card(
+        headline           = item["headline"],
+        simple_explanation = item["simple_explanation"],
+        emoji              = item["emoji"],
+        category           = item["category"],
+        color_hex          = item["color_hex"],
+        source             = item["source"],
+    )
+    print(f"  Image: {img_path}")
 
     if DRY_RUN:
         print("\n[Pipeline] DRY RUN — skipping actual post.")
-        print(f"\n--- TWEET PREVIEW ---\n{item['tweet']}\n---")
     else:
-        result = poster.post_tweet(tweet_text=item["tweet"])
+        result = poster.post_tweet_set(
+            main_text  = item["main_tweet"],
+            sub_text   = item["sub_tweet"],
+            image_path = img_path,
+        )
         if result.get("success"):
             sm.mark_posted(state)
             print(f"[Pipeline] Posted successfully!")
         else:
+            # 投稿失敗した場合はキューの先頭に戻す
             state["queue"].insert(0, item)
             print("[Pipeline] Post failed — item returned to queue.")
 
