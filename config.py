@@ -1,3 +1,6 @@
+from dotenv import load_dotenv
+load_dotenv()
+
 import os
 
 # ── API Keys (GitHub Secrets経由で自動注入) ───────────────────────────────
