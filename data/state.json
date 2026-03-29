@@ -1,5 +1,5 @@
 {
-  "last_collected": "2026-03-29T18:26:30.452049+00:00",
+  "last_collected": "2026-03-29T21:24:18.715553+00:00",
   "seen_urls": [
     "https://www.bbc.com/news/articles/c5y969pnxgvo?at_medium=RSS&at_campaign=rss",
     "https://www.bbc.com/news/articles/cp86yrq5jy7o?at_medium=RSS&at_campaign=rss",
@@ -207,7 +207,49 @@
     "https://www.bbc.com/sport/rugby-league/articles/cvg060932r9o?at_medium=RSS&at_campaign=rss",
     "https://www.bbc.com/sport/football/videos/cz67pz09y4xo?at_medium=RSS&at_campaign=rss",
     "https://www.bbc.com/sport/football/videos/c7vqd4lq8p8o?at_medium=RSS&at_campaign=rss",
-    "https://www.cnn.com/2026/03/29/us/angela-lipps-ai-facial-recognition"
+    "https://www.cnn.com/2026/03/29/us/angela-lipps-ai-facial-recognition",
+    "https://www.bbc.com/news/articles/c3dlk93m7jyo?at_medium=RSS&at_campaign=rss",
+    "https://www.aljazeera.com/video/newsfeed/2026/3/29/israeli-police-bar-priest-from-jerusalems-holy-sepulchre-on-palm-sunday?traffic_source=rss",
+    "https://www.aljazeera.com/video/quotable/2026/3/29/a-premature-ceasefire-risks-another-round-of-conflict-in-future?traffic_source=rss",
+    "https://www.aljazeera.com/video/newsfeed/2026/3/29/irgc-spokesperson-says-trump-only-understands-the-language-of?traffic_source=rss",
+    "https://www.aljazeera.com/video/newsfeed/2026/3/29/qatari-tv-station-hit-in-iran?traffic_source=rss",
+    "https://www.aljazeera.com/gallery/2026/3/29/lebanons-catholics-observe-palm-sunday-under-looming-threat-of-war?traffic_source=rss",
+    "https://www.aljazeera.com/news/2026/3/29/rsf-attack-on-sudans-south-kordofan-kills-at-least-14-including-children?traffic_source=rss",
+    "https://www.aljazeera.com/video/talk-to-al-jazeera/2026/3/29/cuba-is-not-alone-deputy-fm-says-as-us-threats-grow?traffic_source=rss",
+    "https://www.aljazeera.com/news/2026/3/29/republican-mace-says-congress-must-approve-any-us-troop-deployment-to-iran?traffic_source=rss",
+    "https://www.aljazeera.com/news/2026/3/29/zelenskyy-arrives-in-jordan-to-bolster-security-ties?traffic_source=rss",
+    "https://www.theguardian.com/australia-news/live/2026/mar/30/australia-politics-live-national-cabinet-fuel-prices-oil-crisis-labor-anthony-albanese-chris-bowen-coalition-angus-taylor-ntwnfb",
+    "https://www.theguardian.com/australia-news/2026/mar/30/farmers-plead-for-tax-breaks-diesel-guarantees-and-help-buying-fertiliser-as-national-cabinet-meets-on-fuel-crisis",
+    "https://techcrunch.com/2026/03/29/youtube-ceo-says-the-best-youtubers-will-never-leave-their-home/",
+    "https://techcrunch.com/2026/03/29/project-hail-mary-becomes-amazon-mgms-biggest-box-office-hit/",
+    "https://www.theverge.com/entertainment/903174/red-rooms-movie-review-serial-killer-dark-web",
+    "https://variety.com/2026/film/news/donald-glover-campaigned-yoshi-super-mario-galaxy-movie-1236702287/",
+    "https://variety.com/2026/film/news/maspalomas-prize-sonoma-film-festival-1236702281/",
+    "https://variety.com/2026/music/news/bts-arirang-biggest-sales-week-for-group-in-over-a-decade-1236702284/",
+    "https://variety.com/2026/tv/news/the-pitt-sepideh-moafi-agent-change-name-1236702275/",
+    "https://deadline.com/2026/03/fork-in-the-road-world-premiere-sonoma-film-festival-1236768677/",
+    "https://deadline.com/2026/03/jonathan-greenberger-politico-editor-in-chief-1236768674/",
+    "https://deadline.com/2026/03/mary-beth-hurt-dies-79-1236768661/",
+    "https://deadline.com/2026/03/indie-film-box-office-dhurandhar-sequel-north-american-record-1236768640/",
+    "https://www.billboard.com/music/chart-beat/bts-arirang-no1-billboard-200-albums-chart-1236209566/",
+    "https://www.billboard.com/lists/eric-prydz-swedish-house-mafia-ultra-miami-2026-setlist/",
+    "https://www.espn.com/mens-college-basketball/story/_/id/48341285/michigan-overwhelms-tennessee-reach-1st-final-four-2018",
+    "https://www.espn.com/womens-college-basketball/story/_/id/48340682/uconn-dispatches-notre-dame-reach-women-final-four",
+    "https://www.espn.com/nfl/story/_/id/48340452/browns-gm-myles-garrett-contract-tweak-unrelated-trade",
+    "https://www.espn.com/nfl/story/_/id/48340939/lynch-49ers-injury-conspiracy-burger",
+    "https://www.espn.com/nhl/story/_/id/48341426/golden-knights-fire-bruce-cassidy-hire-john-tortorella",
+    "https://www.espn.com/womens-college-basketball/story/_/id/48340059/dawn-staley-says-leading-topic-recruitment-financial",
+    "https://www.espn.com/mens-college-basketball/story/_/id/48292503/ncaa-tournament-losers-recruits-transfer-portal-priorities-departures-2026",
+    "https://www.espn.com/womens-college-basketball/story/_/id/48322646/womens-march-madness-2026-ncaa-tournament-losers-offseason-recruits-transfer-portal",
+    "https://www.bbc.com/sport/football/articles/cq59wed70v5o?at_medium=RSS&at_campaign=rss",
+    "https://www.bbc.com/sport/cricket/articles/cx2475glyjwo?at_medium=RSS&at_campaign=rss",
+    "https://www.bbc.com/sport/football/articles/cwykg07e994o?at_medium=RSS&at_campaign=rss",
+    "https://www.bbc.com/sport/rugby-league/articles/ckge9ez4dx1o?at_medium=RSS&at_campaign=rss",
+    "https://www.bbc.com/sport/football/articles/cde52ng3r11o?at_medium=RSS&at_campaign=rss",
+    "https://www.bbc.com/sport/football/videos/crl1k6zgdg9o?at_medium=RSS&at_campaign=rss",
+    "https://techfixated.com/a-1977-time-capsule-voyager-1-runs-on-69-kb-of-memory-and-an-8-track-tape-recorder-4/",
+    "https://github.com/neovim/neovim/releases/tag/v0.12.0",
+    "https://www.theguardian.com/society/2026/mar/29/full-network-clitoral-nerves-mapped-out-first-time-women-pelvic-surgery"
   ],
   "queue": [
     {
@@ -241,11 +283,27 @@
       "url": "https://techcrunch.com/2026/03/29/techcrunch-mobility-when-a-robotaxi-has-to-call-911/",
       "source": "TechCrunch",
       "category": "tech"
+    },
+    {
+      "tweet": "Italy is investigating Sephora for marketing skincare to literal children. We’re pushing anti-aging serums on toddlers now. The collapse is complete I guess.\nhttps://tinyurl.com/2964jgtx",
+      "buzz_score": 92,
+      "original_title": "Italy investigates Sephora and Benefit over marketing skincare to children",
+      "url": "https://www.bbc.com/news/articles/c3dlk93m7jyo?at_medium=RSS&at_campaign=rss",
+      "source": "BBC World",
+      "category": "world"
+    },
+    {
+      "tweet": "Voyager 1 is billions of miles away running on 69 KB of memory and a cassette player. Meanwhile, my laptop crashes if I open too many Chrome tabs. Truly humbling.\nhttps://tinyurl.com/222syvjx",
+      "buzz_score": 85,
+      "original_title": "Voyager 1 runs on 69 KB of memory and an 8-track tape recorder",
+      "url": "https://techfixated.com/a-1977-time-capsule-voyager-1-runs-on-69-kb-of-memory-and-an-8-track-tape-recorder-4/",
+      "source": "HackerNews",
+      "category": "tech"
     }
   ],
   "stats": {
     "total_posted": 0,
-    "total_collected": 4,
+    "total_collected": 6,
     "last_posted": null
   }
 }
