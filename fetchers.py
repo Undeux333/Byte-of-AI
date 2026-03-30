@@ -52,6 +52,16 @@ RSS_SOURCES = [
     # Feel-good / Chaos
     {"url": "https://www.upworthy.com/feed",                         "source": "Upworthy",         "category": "lifestyle"},
     {"url": "https://www.goodnewsnetwork.org/feed/",                 "source": "Good News Network","category": "lifestyle"},
+
+    # Gen Z / Youth culture
+    {"url": "https://www.vulture.com/rss/all.xml",                   "source": "Vulture",          "category": "entertainment"},
+    {"url": "https://www.thecut.com/rss/all.xml",                    "source": "The Cut",          "category": "lifestyle"},
+    {"url": "https://www.complex.com/rss",                           "source": "Complex",          "category": "entertainment"},
+    {"url": "https://hypebeast.com/feed",                            "source": "Hypebeast",        "category": "entertainment"},
+    {"url": "https://www.polygon.com/rss/index.xml",                 "source": "Polygon",          "category": "entertainment"},
+    {"url": "https://www.inverse.com/rss",                           "source": "Inverse",          "category": "science"},
+    {"url": "https://ew.com/feed/",                                  "source": "Entertainment Weekly", "category": "entertainment"},
+    {"url": "https://www.indiewire.com/feed/",                       "source": "IndieWire",        "category": "entertainment"},
 ]
 
 # ── HackerNews ────────────────────────────────────────────────────────────────

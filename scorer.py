@@ -12,21 +12,34 @@ client = genai.Client(api_key=GEMINI_API_KEY)
 
 # ── Rule-based pre-scoring ────────────────────────────────────────────────────
 HIGH_VALUE_SOURCES = {
-    "BBC World": 30, "Reuters": 30, "NPR News": 28, "NYT World": 28,
-    "HackerNews": 25, "Al Jazeera": 22, "The Guardian": 22,
-    "ESPN": 20, "BBC Sport": 20, "TechCrunch": 20, "The Ringer": 18,
-    "Variety": 18, "Deadline": 18, "ScienceDaily": 18,
-    "The Verge": 16, "Ars Technica": 16, "Wired": 16,
-    "Billboard": 15, "WSJ": 20, "New Scientist": 15,
-    "Psychology Today": 18, "PsyPost": 16,
-    "Rolling Stone": 15, "IGN": 14, "Kotaku": 13,
-    "Refinery29": 13, "Cosmopolitan": 12,
-    "Lifehacker": 14, "Upworthy": 12, "Good News Network": 11,
+    # World News
+    "BBC World": 28, "Reuters": 28, "NYT World": 26, "NPR News": 26,
+    "The Guardian": 22, "Al Jazeera": 22,
+    # Tech
+    "HackerNews": 24, "TechCrunch": 20, "The Verge": 18,
+    "Ars Technica": 18, "Wired": 18,
+    # Sports
+    "ESPN": 20, "BBC Sport": 20, "The Ringer": 18,
+    # Psychology
+    "Psychology Today": 18, "PsyPost": 17,
+    # Entertainment（若者向け強化）
+    "Billboard": 21, "IGN": 21, "Vulture": 21, "Complex": 21,
+    "Polygon": 20, "Kotaku": 20,
+    "Rolling Stone": 17, "Entertainment Weekly": 17, "IndieWire": 15,
+    "Variety": 14, "Deadline": 14,
+    # Lifestyle（若者向け強化）
+    "The Cut": 20, "Cosmopolitan": 20, "Refinery29": 20,
+    "Hypebeast": 18, "Lifehacker": 16,
+    "Upworthy": 15, "Good News Network": 15,
+    # Science
+    "ScienceDaily": 17, "New Scientist": 16, "Inverse": 16,
+    # Business
+    "WSJ": 17,
 }
 
 CATEGORY_BONUS = {
-    "world": 15, "sports": 12, "entertainment": 11,
-    "tech": 11, "science": 10, "psychology": 12,
+    "world": 12, "sports": 11, "entertainment": 11,
+    "tech": 10, "science": 10, "psychology": 11,
     "lifestyle": 10, "business": 8, "other": 5,
 }
 
@@ -132,6 +145,17 @@ REFERENCE EXAMPLES (do not copy — use as quality benchmark only):
 "Nobody asked." / "Color me surprised." / "Hard pass." /
 "Meanwhile my laptop." / "Be my guest." / "Shocker." /
 "And yet here we are." / "Cool cool cool." / "I'm out."
+
+ENTERTAINMENT SELECTION RULE:
+For entertainment stories, ask yourself:
+"Would someone interrupt their friend mid-sentence to share this?"
+If yes — pick it. Box office numbers and casting news alone — skip.
+
+ENTERTAINMENT STORIES — apply this test before selecting:
+"Would someone interrupt their friend mid-sentence to share this?"
+If yes — pick it. Box office numbers, ratings data, or casting news alone — skip.
+Only select entertainment stories about: massive franchises, shocking news,
+nostalgia moments, or artists/characters everyone knows.
 
 BUZZ SCORE CRITERIA:
 90-100: Will spark strong opinions, "same" replies, or debates

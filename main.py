@@ -1,14 +1,12 @@
 #!/usr/bin/env python3
-import random
 import sys
-import time
 from datetime import datetime, timezone
 
 import state_manager as sm
 import fetchers
 import scorer
 import poster
-from config import COLLECTION_INTERVAL_HOURS, SLEEP_MAX_SECONDS
+from config import COLLECTION_INTERVAL_HOURS
 
 DRY_RUN = "--dry-run" in sys.argv
 
@@ -18,12 +16,6 @@ def run():
     print(f"  BOT PIPELINE  [{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}]")
     print(f"  DRY RUN: {DRY_RUN}")
     print(f"{'='*60}\n")
-
-    # ── ランダム待機（スパム検出回避）────────────────────────────
-    if not DRY_RUN:
-        sleep_sec = random.randint(0, SLEEP_MAX_SECONDS)
-        print(f"[Pipeline] Sleeping {sleep_sec}s for randomness...\n")
-        time.sleep(sleep_sec)
 
     state = sm.load()
     stats = sm.get_stats(state)
