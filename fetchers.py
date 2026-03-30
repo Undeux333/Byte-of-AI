@@ -7,7 +7,7 @@ RSS_SOURCES = [
     # World News
     {"url": "http://feeds.bbci.co.uk/news/world/rss.xml",           "source": "BBC World",       "category": "world"},
     {"url": "https://feeds.reuters.com/reuters/topNews",             "source": "Reuters",          "category": "world"},
-    {"url": "https://feeds.npr.org/1001/rss.xml",                    "source": "AP News",          "category": "world"},
+    {"url": "https://feeds.npr.org/1001/rss.xml",                    "source": "NPR News",         "category": "world"},
     {"url": "https://www.aljazeera.com/xml/rss/all.xml",             "source": "Al Jazeera",       "category": "world"},
     {"url": "https://www.theguardian.com/world/rss",                 "source": "The Guardian",     "category": "world"},
     {"url": "https://rss.nytimes.com/services/xml/rss/nyt/World.xml","source": "NYT World",        "category": "world"},
@@ -47,7 +47,7 @@ RSS_SOURCES = [
     {"url": "https://lifehacker.com/feed/rss",                       "source": "Lifehacker",       "category": "lifestyle"},
 
     # Business
-    {"url": "https://feeds.a.dj.com/rss/RSSWorldNews.xml",          "source": "CNN Business",     "category": "business"},
+    {"url": "https://feeds.a.dj.com/rss/RSSWorldNews.xml",          "source": "WSJ",              "category": "business"},
 
     # Feel-good / Chaos
     {"url": "https://www.upworthy.com/feed",                         "source": "Upworthy",         "category": "lifestyle"},

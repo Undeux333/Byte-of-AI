@@ -12,12 +12,12 @@ client = genai.Client(api_key=GEMINI_API_KEY)
 
 # ── Rule-based pre-scoring ────────────────────────────────────────────────────
 HIGH_VALUE_SOURCES = {
-    "BBC World": 30, "Reuters": 30, "AP News": 28, "NYT World": 28,
+    "BBC World": 30, "Reuters": 30, "NPR News": 28, "NYT World": 28,
     "HackerNews": 25, "Al Jazeera": 22, "The Guardian": 22,
     "ESPN": 20, "BBC Sport": 20, "TechCrunch": 20, "The Ringer": 18,
     "Variety": 18, "Deadline": 18, "ScienceDaily": 18,
     "The Verge": 16, "Ars Technica": 16, "Wired": 16,
-    "Billboard": 15, "CNN Business": 15, "New Scientist": 15,
+    "Billboard": 15, "WSJ": 20, "New Scientist": 15,
     "Psychology Today": 18, "PsyPost": 16,
     "Rolling Stone": 15, "IGN": 14, "Kotaku": 13,
     "Refinery29": 13, "Cosmopolitan": 12,
