@@ -2,14 +2,6 @@
   "last_collected": "2026-03-30T15:42:13.566858+00:00",
   "queue": [
     {
-      "tweet": "The White House is officially talking about just grabbing oil terminals in Iran like it’s a side quest in a video game. We really are doing anything to avoid fixing our own commute. It's just a vibe.",
-      "original_url": "https://www.npr.org/2026/03/30/nx-s1-5765967/trump-iran-israel-lebanon-kharg-island-oil",
-      "buzz_score": 92,
-      "original_title": "Trump weighing all options on Iran's Kharg Island",
-      "source": "NPR News",
-      "category": "world"
-    },
-    {
       "tweet": "Starcloud raised $170 million to build data centers in space. I cannot even get my printer to recognize the WiFi in my apartment. Meanwhile my laptop.",
       "original_url": "https://techcrunch.com/2026/03/30/starcloud-raises-170-million-series-ato-build-data-centers-in-space/",
       "buzz_score": 85,
@@ -883,7 +875,7 @@
   ],
   "carryover_candidates": [],
   "stats": {
-    "total_posted": 8,
+    "total_posted": 9,
     "total_collected": 16
   }
 }
