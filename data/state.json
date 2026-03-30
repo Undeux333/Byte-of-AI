@@ -2,14 +2,6 @@
   "last_collected": "2026-03-30T12:05:57.625706+00:00",
   "queue": [
     {
-      "tweet": "The government is deploying Marines to grab oil and calling anyone who disagrees stupid. I mean, glad we have our priorities straight. Respect the commitment.",
-      "original_url": "https://www.aljazeera.com/news/2026/3/30/trump-wants-to-invade-iran-to-seize-oil-calls-us-objectors-stupid?traffic_source=rss",
-      "buzz_score": 92,
-      "original_title": "Trump wants to invade Iran to seize oil, calls US objectors ‘stupid people’",
-      "source": "Al Jazeera",
-      "category": "world"
-    },
-    {
       "tweet": "Almost every single co-founder has left xAI at this point. I wonder if the vision is just too inspiring to stay for. Meanwhile my inbox.",
       "original_url": "https://techcrunch.com/2026/03/28/elon-musks-last-co-founder-reportedly-leaves-xai/",
       "buzz_score": 85,
@@ -676,7 +668,7 @@
   ],
   "carryover_candidates": [],
   "stats": {
-    "total_posted": 5,
+    "total_posted": 6,
     "total_collected": 12
   }
 }
