@@ -2,14 +2,6 @@
   "last_collected": "2026-03-30T15:42:13.566858+00:00",
   "queue": [
     {
-      "tweet": "Mets fans are already booing Bo Bichette after a few bad games. We really do know how to make people feel welcome in this city. Shocker.",
-      "original_url": "https://www.espn.com/mlb/story/_/id/48342743/bo-bichette-hears-boos-mets-fans-strikeouts-mount",
-      "buzz_score": 75,
-      "original_title": "Mets fans boo Bichette as early strikeouts mount",
-      "source": "ESPN",
-      "category": "sports"
-    },
-    {
       "tweet": "The White House is officially talking about just grabbing oil terminals in Iran like it’s a side quest in a video game. We really are doing anything to avoid fixing our own commute. It's just a vibe.",
       "original_url": "https://www.npr.org/2026/03/30/nx-s1-5765967/trump-iran-israel-lebanon-kharg-island-oil",
       "buzz_score": 92,
@@ -891,7 +883,7 @@
   ],
   "carryover_candidates": [],
   "stats": {
-    "total_posted": 7,
+    "total_posted": 8,
     "total_collected": 16
   }
 }
