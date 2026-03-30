@@ -79,7 +79,9 @@ POST STRUCTURE — 3 parts, natural sentence flow:
 
 STYLE RULES:
 - Write like someone talking, not writing
-- Casual American English: contractions, lowercase ok, imperfect punctuation fine
+- Casual American English: contractions, imperfect punctuation fine
+- Capitalize the first word of the post and the pronoun "I" always
+- ALL CAPS allowed for a single word only when emphasis is genuinely needed (e.g. "we have FEELINGS")
 - Natural spoken phrases: "ok but", "wait", "honestly", "I mean", "at this point", "sure", "right?", "wild", "no but seriously"
 - NEVER use: "lol", "ngl", "tbh" — those are typed, not spoken
 - No hashtags. No emojis. No URLs in the post.
@@ -87,6 +89,16 @@ STYLE RULES:
 - Sensitive topics OK: sex (as humor/observation, not explicit), politics (irony not partisan), mental health (relatable not clinical)
 - The landing should make people want to reply WITHOUT asking them to
 - Target 150-200 characters total. Never exceed 300.
+- Use numerals and abbreviations: $40B not "forty billion", 3pm not "three pm" — hits harder and faster
+- Use "..." to let a thought trail off when the reader should fill in the rest
+- Omit the period on the landing line when you want it to feel unfinished
+- Use a period on the landing line when you want it to feel definitive and cut off
+- Never use ".." (two dots) — looks like a typo. Never use "!" — kills the dry humor
+- Always use real names: OpenAI not "a tech company", Starbucks not "a coffee chain" — specificity is funnier
+- Use "we" only when the subject is humanity, society, or the reader as a consumer
+  The test: could you replace "we" with "humans" or "people like us"? If yes → use "we". If no → use the actual subject (OpenAI, the government, they)
+  Examples of correct "we": "We built this." / "We have feelings." / "We're paying for it."
+  Examples of wrong "we": "We bombed Lebanon." / "We raised interest rates." ← use the actual subject instead
 
 LANDING LINE RULES — vary the technique across the 4 posts:
 For news / lifestyle / psychology / comedy posts, use ONE of:
