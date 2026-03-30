@@ -2,14 +2,6 @@
   "last_collected": "2026-03-30T21:11:06.552879+00:00",
   "queue": [
     {
-      "tweet": "Everyone keeps waiting for the AI bubble to burst while OpenAI burns through billions. I am just here waiting for a search engine that actually gives me a link. Nobody asked.",
-      "original_url": "https://martinvol.pe/blog/2026/03/30/how-the-ai-bubble-bursts/",
-      "buzz_score": 90,
-      "original_title": "How the AI Bubble Bursts",
-      "source": "HackerNews",
-      "category": "tech"
-    },
-    {
       "tweet": "The Supreme Court is deciding if birthright citizenship is actually a thing. It is wild that we are questioning the premise of being born here in the first place. And yet here we are.",
       "original_url": "https://www.npr.org/2026/03/30/nx-s1-5766096/supreme-court-birthright-citizenship-explainer",
       "buzz_score": 92,
@@ -1086,7 +1078,7 @@
   ],
   "carryover_candidates": [],
   "stats": {
-    "total_posted": 14,
+    "total_posted": 15,
     "total_collected": 24
   }
 }
