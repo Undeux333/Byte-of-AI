@@ -2,14 +2,6 @@
   "last_collected": "2026-03-30T18:39:40.146924+00:00",
   "queue": [
     {
-      "tweet": "Production on the new Tomb Raider series is paused because Sophie Turner got injured. I guess even Lara Croft can't survive the current state of the industry. Nobody asked.",
-      "original_url": "https://kotaku.com/sophie-turner-injury-halts-tomb-raider-tv-series-production-2000683144",
-      "buzz_score": 82,
-      "original_title": "Sophie Turner Injury Halts Tomb Raider TV Series Production",
-      "source": "Kotaku",
-      "category": "entertainment"
-    },
-    {
       "tweet": "Trump is talking about sending troops to seize an Iranian oil terminal. I guess we are just doing resource acquisition in the open now. Color me surprised.",
       "original_url": "https://www.bbc.com/news/articles/c937gd1vq7xo?at_medium=RSS&at_campaign=rss",
       "buzz_score": 95,
@@ -1078,7 +1070,7 @@
   ],
   "carryover_candidates": [],
   "stats": {
-    "total_posted": 11,
+    "total_posted": 12,
     "total_collected": 20
   }
 }
