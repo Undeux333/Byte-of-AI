@@ -1,32 +1,33 @@
 #!/usr/bin/env python3
+
 import sys
+import time
 from datetime import datetime, timezone
 
 import state_manager as sm
 import fetchers
 import scorer
 import poster
+
 from config import COLLECTION_INTERVAL_HOURS
 
 DRY_RUN = "--dry-run" in sys.argv
 
-
 def run():
     print(f"\n{'='*60}")
-    print(f"  BOT PIPELINE  [{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}]")
-    print(f"  DRY RUN: {DRY_RUN}")
+    print(f" BOT PIPELINE [{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}]")
+    print(f" DRY RUN: {DRY_RUN}")
     print(f"{'='*60}\n")
 
     state = sm.load()
     stats = sm.get_stats(state)
-    print(f"[State] Queue={stats['queue_size']}  Posted={stats['total_posted']}  "
-          f"SeenURLs={stats['seen_urls']}  Carryover={stats['carryover']}")
+    print(f"[State] Queue={stats['queue_size']} Posted={stats['total_posted']} "
+          f"SeenURLs={stats['seen_urls']} Carryover={stats['carryover']}")
 
     # ── Step 1: 収集 ──────────────────────────────────────────────
     if sm.collection_needed(state, COLLECTION_INTERVAL_HOURS):
         print(f"\n[Pipeline] Collection needed. Running...\n")
 
-        # アクセストークン自動更新
         if not DRY_RUN:
             poster.refresh_token()
 
@@ -55,41 +56,46 @@ def run():
     else:
         print("[Pipeline] Collection not needed yet.\n")
 
-    # ── Step 2: 投稿 ──────────────────────────────────────────────
-    item = sm.pop_next(state)
-    if not item:
-        print("[Pipeline] Queue empty — nothing to post.")
-        sm.save(state)
-        return
+    # ── Step 2: 投稿（2件）──────────────────────────────────────────────
+    for post_num in range(1, 3):  # 1件目、2件目
+        item = sm.pop_next(state)
+        if not item:
+            print(f"[Pipeline] Queue empty at post {post_num} — stopping.")
+            break
 
-    tweet_text   = item.get("tweet", "")
-    original_url = item.get("original_url", "")
+        tweet_text   = item.get("tweet", "")
+        original_url = item.get("original_url", "")
 
-    print(f"[Pipeline] Posting next item...")
-    print(f"  Tweet: {tweet_text[:100]}...")
-    print(f"  URL:   {original_url[:80]}")
+        print(f"[Pipeline] Posting item {post_num}/2...")
+        print(f"  Tweet: {tweet_text[:100]}...")
+        print(f"  URL:   {original_url[:80]}")
 
-    if DRY_RUN:
-        print("\n[Pipeline] DRY RUN — skipping actual post.")
-        print(f"\n--- TWEET PREVIEW ---\n{tweet_text}\n")
-        if original_url:
-            print(f"--- REPLY (URL) ---\n🔗 Source: {original_url}\n---")
-    else:
-        result = poster.post_tweet(
-            tweet_text=tweet_text,
-            original_url=original_url,
-        )
-        if result.get("success"):
-            sm.mark_posted(state)
-            print(f"[Pipeline] Posted successfully!")
+        if DRY_RUN:
+            print(f"\n[Pipeline] DRY RUN — skipping actual post {post_num}.")
+            print(f"\n--- TWEET PREVIEW {post_num} ---\n{tweet_text}\n")
+            if original_url:
+                print(f"--- REPLY (URL) ---\n🔗 Source: {original_url}\n---")
         else:
-            state["queue"].insert(0, item)
-            print("[Pipeline] Post failed — item returned to queue.")
+            result = poster.post_tweet(
+                tweet_text=tweet_text,
+                original_url=original_url,
+            )
+            if result.get("success"):
+                sm.mark_posted(state)
+                print(f"[Pipeline] Post {post_num} succeeded!")
+            else:
+                state["queue"].insert(0, item)
+                print(f"[Pipeline] Post {post_num} failed — item returned to queue.")
+                break  # 失敗したら2件目は試みない
+
+        # 2件目の前に10秒待機（連投対策）
+        if post_num == 1:
+            print(f"[Pipeline] Waiting 10s before next post...")
+            time.sleep(10)
 
     sm.save(state)
     stats = sm.get_stats(state)
-    print(f"\n[Stats] Queue={stats['queue_size']}  TotalPosted={stats['total_posted']}")
-
+    print(f"\n[Stats] Queue={stats['queue_size']} TotalPosted={stats['total_posted']}")
 
 if __name__ == "__main__":
     run()

@@ -88,74 +88,109 @@ CONTENT MIX — pick at most 2 stories from the same category:
 POST STRUCTURE — 3 parts, natural sentence flow:
 1. The fact — state it bluntly (1-2 sentences)
 2. The twist — sharp observation or unexpected reframe (1-2 sentences)
-3. The landing — 5 words or fewer, cut off abruptly
+3. The landing — chosen by story diagnosis (see below)
 
 STYLE RULES:
 - Write like someone talking, not writing
 - Casual American English: contractions, imperfect punctuation fine
+- CONTRACTIONS ARE DEFAULT: always use I'm, we're, it's, don't, can't, isn't,
+  they're, you're, I've, I'd, that's, there's, won't
+  Exception: full form allowed ONLY when a real American would stress it aloud for emphasis
+  Test: say it out loud. If stressing the full word sounds natural in speech → allowed.
+  If it just sounds stiff → use the contraction.
+  Allowed: "I am done." (said through gritted teeth) / "We are not doing this." (firm refusal)
+  NOT allowed: "I am just here waiting" / "I cannot even get my printer" ← must be I'm / I can't
 - Capitalize the first word of the post and the pronoun "I" always
 - ALL CAPS allowed for a single word only when emphasis is genuinely needed (e.g. "we have FEELINGS")
-- Natural spoken phrases: "ok but", "wait", "honestly", "I mean", "at this point", "sure", "right?", "wild", "no but seriously"
+- Natural spoken phrases: "ok but", "wait", "honestly", "I mean", "at this point",
+  "sure", "right?", "wild", "no but seriously"
 - NEVER use: "lol", "ngl", "tbh" — those are typed, not spoken
 - No hashtags. No emojis. No URLs in the post.
 - Dark humor OK if it punches UP at power/institutions — never at victims
-- Sensitive topics OK: sex (as humor/observation, not explicit), politics (irony not partisan), mental health (relatable not clinical)
+- Sensitive topics OK: sex (as humor/observation, not explicit), politics (irony not partisan),
+  mental health (relatable not clinical)
 - The landing should make people want to reply WITHOUT asking them to
-- Target 150-200 characters total. Never exceed 300.
-- Use numerals and abbreviations: $40B not "forty billion", 3pm not "three pm" — hits harder and faster
+- Target 120-180 characters total. Never exceed 240. Cut ruthlessly — shorter is almost always funnier.
+- Use numerals and abbreviations: $40B not "forty billion", 3pm not "three pm"
 - Use "..." to let a thought trail off when the reader should fill in the rest
 - Omit the period on the landing line when you want it to feel unfinished
 - Use a period on the landing line when you want it to feel definitive and cut off
 - Never use ".." (two dots) — looks like a typo. Never use "!" — kills the dry humor
-- Always use real names: OpenAI not "a tech company", Starbucks not "a coffee chain" — specificity is funnier
+- Always use real names: OpenAI not "a tech company", Starbucks not "a coffee chain"
 - Use "we" only when the subject is humanity, society, or the reader as a consumer
-  The test: could you replace "we" with "humans" or "people like us"? If yes → use "we". If no → use the actual subject (OpenAI, the government, they)
-  Examples of correct "we": "We built this." / "We have feelings." / "We're paying for it."
-  Examples of wrong "we": "We bombed Lebanon." / "We raised interest rates." ← use the actual subject instead
+  Test: could you replace "we" with "humans" or "people like us"? If yes → use "we".
+  If no → use the actual subject (OpenAI, the government, they)
+  Correct: "We built this." / "We have feelings." / "We're paying for it."
+  Wrong: "We bombed Lebanon." / "We raised interest rates." ← use the actual subject
 
-THE LANDING LINE — the most important part of the post:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+THE LANDING LINE — diagnose the story first, then choose
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-PRIORITY RULE: The landing must sound like something a real American
-would say out loud in daily conversation. Not online slang. Not written-only.
-If it wouldn't work spoken aloud to a friend, rewrite it.
+Before writing the landing, ask: what is the PRIMARY energy this story carries?
+Choose the landing type that matches. If a story doesn't qualify for a type, use a different type.
+Never force a type that doesn't fit — rewrite the body until one qualifies naturally.
 
-Choose the right type for this story:
-
-TYPE A — Instant laugh (for news, politics, sports):
-Short and punchy — under 6 words.
-It should land before the reader sees it coming.
-Works spoken aloud on a stage.
+TYPE A — Instant laugh
+USE WHEN: the story is surprising, absurd, or counterintuitive as a plain fact
+THE MOVE: land before the reader sees it coming. Under 6 words. Works spoken aloud on a stage.
 Examples: "Color me surprised." / "Respect the commitment." / "Nobody asked."
+SKIP IF: the absurdity needs explaining to land, or you've already used this exact phrase in the batch
 
-TYPE B — Delayed laugh (for psychology, tech, daily life irony):
-Leave the most important word unsaid.
-If you can feel yourself explaining — stop one sentence earlier.
-The gap between what you said and what you meant — that's the laugh.
-Examples: "It has never met me." / "Meanwhile my laptop." / "I just wanted a sandwich."
+TYPE B — Delayed laugh
+USE WHEN: the irony lives in the gap between two things
+(what was said vs. what was done / what was promised vs. what happened / scale vs. outcome)
+THE MOVE: leave the most important word unsaid. The gap between what you said and what you meant — that's the laugh.
+Examples: "Meanwhile my laptop." / "I just wanted a sandwich." / "It has never met me."
+SKIP IF: the gap isn't immediately obvious without context, or the pivot feels random
 
-RULES FOR BOTH TYPES:
-- Never explain or summarize what just happened
-- Never end with a question
-- Avoid internet-only slang ("based", "slay", "no cap", "lmao", etc.)
-- Draw freely from comedy, irony, absurdity, everyday American expressions
-- Do NOT use the same type more than twice across the 4 posts in this batch
-- The reader should need a half-second to get it — that delay is where the laugh lives
+TYPE C — The sharp read
+USE WHEN: power, institutions, or money are doing something obviously wrong but presented as normal
+THE MOVE: say the one true thing nobody in the room is saying. Must be specific to THIS story.
+Under 12 words. No hedging. No "maybe" or "kind of". Feels like the smartest person finally speaking.
+Examples:
+"The safety team left before the launch. Just so you know."
+"The press release and the product are different documents."
+"They announced the layoffs on the same slide as the record profits."
+SKIP IF: the observation could apply to any story this week — generic cynicism is noise, not a read
 
-REFERENCE EXAMPLES (do not copy — use as quality benchmark only):
-"Nobody asked." / "Color me surprised." / "Hard pass." /
-"Meanwhile my laptop." / "Be my guest." / "Shocker." /
-"And yet here we are." / "Cool cool cool." / "I'm out."
+TYPE D — Pivot to self
+USE WHEN: the story reveals a universal behavior, feeling, or situation that's rarely named out loud
+THE MOVE: drop the news entirely. Land on the human experience it exposes.
+The reader should feel seen, not informed. This is recognition, not a joke — the laugh comes from being seen.
+Examples:
+"I've been doing this for years and nobody gave me a term for it."
+"Anyway I have a meeting in 4 minutes."
+"I just wanted to be normal about it."
+SKIP IF: the pivot requires the news to make sense, or the universal experience feels like a stretch
 
-ENTERTAINMENT SELECTION RULE:
-For entertainment stories, ask yourself:
-"Would someone interrupt their friend mid-sentence to share this?"
-If yes — pick it. Box office numbers and casting news alone — skip.
+OVERRIDE RULES — apply after diagnosis:
+- If no type passes its own SKIP test → rewrite the body until one does
+- If two types both qualify → choose the one with the shorter landing
+- NEVER use the exact same landing phrase twice in one batch — not even close variants
+- ONE punchline per post — if you have two jokes, cut the weaker one before writing the landing
+- The landing must connect to THIS story — a reader who only sees the landing should guess the topic
+- The landing must sound like something a real American would say out loud to a friend
+  If it only works written — rewrite it
 
-ENTERTAINMENT STORIES — apply this test before selecting:
-"Would someone interrupt their friend mid-sentence to share this?"
-If yes — pick it. Box office numbers, ratings data, or casting news alone — skip.
-Only select entertainment stories about: massive franchises, shocking news,
-nostalgia moments, or artists/characters everyone knows.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STORY SELECTION RULES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ENTERTAINMENT:
+Ask: "Would someone interrupt their friend mid-sentence to share this?"
+If yes — pick it.
+SKIP: box office numbers, ratings data, casting news alone, production updates alone
+PICK: massive franchise moments, shocking personal news, nostalgia triggers,
+something everyone has an opinion on
+
+POLITICS / WORLD NEWS:
+Skip straight reporting. Pick only when the irony is self-evident —
+when the gap between what was said and what's true is the whole joke.
+The story must work without explaining the politics.
+SKIP: policy announcements, summit results, vote counts
+PICK: a leader contradicting their own stated position, a statement that aged badly within 24 hours,
+power doing something absurd in plain sight
 
 BUZZ SCORE CRITERIA:
 90-100: Will spark strong opinions, "same" replies, or debates
@@ -163,10 +198,7 @@ BUZZ SCORE CRITERIA:
 50-69: Interesting but niche audience
 below 50: Skip this story
 
-Among the {top_n} posts, vary the tone:
-- 1-2 posts: sharp irony or political observation
-- 1 post: dry understatement or self-deprecating
-- 1 post: absurd or surprising fact with unexpected landing
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Here are {n} news stories. Do TWO things:
 1. Pick the BEST {top_n} stories (max 2 from same category, prioritize buzz_score 70+)
@@ -181,7 +213,8 @@ Respond ONLY with valid JSON (no markdown, no explanation):
     {{
       "index": <0-based story index>,
       "buzz_score": <0-100>,
-      "post": "<150-300 chars, no URL, follow all style rules above>"
+      "landing_type": "<A|B|C|D>",
+      "post": "<120-240 chars, no URL, follow all style rules above>"
     }}
   ]
 }}
@@ -280,8 +313,9 @@ def score_all(stories: list[dict], state: dict) -> list[dict]:
         idx = sel.get("index", 0)
         if idx >= len(candidates):
             continue
-        story    = candidates[idx]
-        post_raw = sel.get("post", "").strip()
+        story        = candidates[idx]
+        post_raw     = sel.get("post", "").strip()
+        landing_type = sel.get("landing_type", "?")
         if not post_raw:
             continue
 
@@ -295,9 +329,10 @@ def score_all(stories: list[dict], state: dict) -> list[dict]:
             "url":            story.get("url", ""),
             "source":         story.get("source", ""),
             "category":       story.get("category", "other"),
+            "landing_type":   landing_type,
         })
         print(f"  [Scorer] Selected [{story['category']}] {story['title'][:60]}...")
-        print(f"           Post: {post_raw[:80]}...")
+        print(f"           Type: {landing_type} | Post: {post_raw[:80]}...")
 
     # 持ち越し候補保存（選ばれなかった上位8件）
     rejected = [c for i, c in enumerate(candidates) if i not in selected_indices]
