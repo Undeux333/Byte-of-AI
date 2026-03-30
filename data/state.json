@@ -2,14 +2,6 @@
   "last_collected": "2026-03-30T18:39:40.146924+00:00",
   "queue": [
     {
-      "tweet": "Turns out Pokémon FireRed and LeafGreen were specifically designed for girls and the elderly. My grandmother had a higher IV stat than me this whole time. Respect the commitment.",
-      "original_url": "https://www.polygon.com/pokmon-firered-leafgreen-designed-for-girls-elderly/",
-      "buzz_score": 88,
-      "original_title": "Pokémon FireRed and LeafGreen were primarily designed for girls and the elderly",
-      "source": "Polygon",
-      "category": "entertainment"
-    },
-    {
       "tweet": "Production on the new Tomb Raider series is paused because Sophie Turner got injured. I guess even Lara Croft can't survive the current state of the industry. Nobody asked.",
       "original_url": "https://kotaku.com/sophie-turner-injury-halts-tomb-raider-tv-series-production-2000683144",
       "buzz_score": 82,
@@ -1086,7 +1078,7 @@
   ],
   "carryover_candidates": [],
   "stats": {
-    "total_posted": 10,
+    "total_posted": 11,
     "total_collected": 20
   }
 }
