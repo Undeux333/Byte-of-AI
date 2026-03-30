@@ -1,5 +1,5 @@
 {
-  "last_collected": "2026-03-29T21:24:18.715553+00:00",
+  "last_collected": "2026-03-30T01:19:11.898209+00:00",
   "seen_urls": [
     "https://www.bbc.com/news/articles/c5y969pnxgvo?at_medium=RSS&at_campaign=rss",
     "https://www.bbc.com/news/articles/cp86yrq5jy7o?at_medium=RSS&at_campaign=rss",
@@ -249,7 +249,42 @@
     "https://www.bbc.com/sport/football/videos/crl1k6zgdg9o?at_medium=RSS&at_campaign=rss",
     "https://techfixated.com/a-1977-time-capsule-voyager-1-runs-on-69-kb-of-memory-and-an-8-track-tape-recorder-4/",
     "https://github.com/neovim/neovim/releases/tag/v0.12.0",
-    "https://www.theguardian.com/society/2026/mar/29/full-network-clitoral-nerves-mapped-out-first-time-women-pelvic-surgery"
+    "https://www.theguardian.com/society/2026/mar/29/full-network-clitoral-nerves-mapped-out-first-time-women-pelvic-surgery",
+    "https://www.bbc.com/news/articles/cn4vw2xmpzzo?at_medium=RSS&at_campaign=rss",
+    "https://www.aljazeera.com/economy/2026/3/30/oil-rises-above-116-a-barrel-as-iran-accuses-us-of-preparing-invasion?traffic_source=rss",
+    "https://www.aljazeera.com/news/2026/3/30/iranian-attack-damages-kuwait-power-and-desalination-plant-kills-worker?traffic_source=rss",
+    "https://www.aljazeera.com/news/liveblog/2026/3/30/iran-war-live-worker-killed-in-kuwait-israel-intercepts-drones-from-yemen?traffic_source=rss",
+    "https://www.aljazeera.com/video/inside-story/2026/3/29/how-will-the-houthis-involvement-shape-the-war?traffic_source=rss",
+    "https://www.aljazeera.com/news/2026/3/29/european-nations-criticise-israels-death-penalty-plans?traffic_source=rss",
+    "https://www.aljazeera.com/news/2026/3/29/iran-accuses-us-of-plotting-ground-attack-as-israel-steps-up-bombardment?traffic_source=rss",
+    "https://www.theguardian.com/us-news/2026/mar/29/us-russian-oil-tanker-cuba-blockade",
+    "https://www.theguardian.com/world/2026/mar/30/china-teapot-refineries-crude-oil-iran-war",
+    "https://www.theguardian.com/australia-news/live/2026/mar/30/dezi-freeman-update-news-shot-dead-by-police-australia-fugitive-victoria-porepunkah-shooting-live-updates-latest-ntwnfb",
+    "https://www.theguardian.com/australia-news/2026/mar/30/dezi-freeman-shot-dead-police-shooting-victoria-porepunkah-ntwnfb",
+    "https://techcrunch.com/2026/03/29/google-pixel-10a-review-camera-bump-performance-ai-chip/",
+    "https://www.theverge.com/ai-artificial-intelligence/903190/bluesky-attie-ai-custom-feeds",
+    "https://variety.com/2026/tv/news/alex-duong-dead-stand-up-blue-bloods-1236702311/",
+    "https://deadline.com/2026/03/2026-sonoma-international-film-festival-awards-1236768725/",
+    "https://deadline.com/2026/03/steve-carell-the-office-pilot-lowest-testing-paul-rudd-1236768703/",
+    "https://deadline.com/2026/03/alex-duong-dead-comedian-blue-bloods-actor-1236768694/",
+    "https://deadline.com/2026/03/chris-pratt-altered-mario-mamma-mia-catchphrase-movies-1236768690/",
+    "https://www.billboard.com/lists/tecate-pal-norte-2026-grupo-frontera-among-best-of-day-2/",
+    "https://www.billboard.com/music/music-news/dj-dan-death-1236209595/",
+    "https://www.billboard.com/music/music-news/melanie-martinez-hades-favorite-new-music-poll-results-1236209608/",
+    "https://www.espn.com/mens-college-basketball/story/_/id/48341357/final-four-preview-arizona-michigan-uconn-illinois-predictions-2026",
+    "https://www.espn.com/mens-college-basketball/story/_/id/48341549/mens-march-madness-2026-ranking-ncaa-tournament-teams-final-four",
+    "https://www.espn.com/mens-college-basketball/story/_/id/48342842/uconn-rallies-19-point-deficit-stuns-duke-last-second-3-reach-final-four-men-ncaa-tournament",
+    "https://www.espn.com/womens-college-basketball/story/_/id/48341780/ucla-rallies-vs-duke-make-women-final-four",
+    "https://www.espn.com/golf/story/_/id/48342395/woodland-wins-houston-open-first-title-brain-surgery",
+    "https://www.espn.com/mens-college-basketball/story/_/id/48342357/st-john-men-basketball-signs-rick-pitino-new-contract-making-second-highest-paid-coach-big-east",
+    "https://www.espn.com/wnba/story/_/id/48316853/wnba-cba-collective-bargaining-agreement-2026-biggest-wins",
+    "https://www.bbc.com/sport/football/articles/ce84xpdedpvo?at_medium=RSS&at_campaign=rss",
+    "https://www.bbc.com/sport/golf/articles/c5y85wyxj91o?at_medium=RSS&at_campaign=rss",
+    "https://github.com/anthropics/claude-code/issues/40710",
+    "https://ryelang.org/blog/posts/cognitive-dark-forest/",
+    "https://www.buchodi.com/chatgpt-wont-let-you-type-until-cloudflare-reads-your-react-state-i-decrypted-the-program-that-does-it/",
+    "https://github.com/chenglou/pretext",
+    "https://herbsutter.com/2026/03/29/c26-is-done-trip-report-march-2026-iso-c-standards-meeting-london-croydon-uk/"
   ],
   "queue": [
     {
@@ -299,11 +334,27 @@
       "url": "https://techfixated.com/a-1977-time-capsule-voyager-1-runs-on-69-kb-of-memory-and-an-8-track-tape-recorder-4/",
       "source": "HackerNews",
       "category": "tech"
+    },
+    {
+      "tweet": "75% of fans want VAR gone from the Premier League. We invented high-tech cameras just to spend five minutes watching a guy in a booth draw lines on a pixelated screen. Peak efficiency I guess.\nhttps://tinyurl.com/2b2gqjpg",
+      "buzz_score": 88,
+      "original_title": "75% of fans oppose VAR in Premier League, says FSA",
+      "url": "https://www.bbc.com/sport/football/articles/ce84xpdedpvo?at_medium=RSS&at_campaign=rss",
+      "source": "BBC Sport",
+      "category": "sports"
+    },
+    {
+      "tweet": "Steve Carell said The Office pilot tested as one of the worst shows in NBC history. Imagine if they’d listened to the data and canceled it before it even started. Glad they ignored the suits.\nhttps://tinyurl.com/29ahqbax",
+      "buzz_score": 82,
+      "original_title": "Steve Carell Recalls ‘The Office’ Pilot Being Among The “Lowest Testing” In NBC History & Why Paul Rudd Advised Him Not To Audition For It",
+      "url": "https://deadline.com/2026/03/steve-carell-the-office-pilot-lowest-testing-paul-rudd-1236768703/",
+      "source": "Deadline",
+      "category": "entertainment"
     }
   ],
   "stats": {
     "total_posted": 0,
-    "total_collected": 6,
+    "total_collected": 8,
     "last_posted": null
   }
 }
