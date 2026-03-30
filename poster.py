@@ -1,30 +1,93 @@
-# poster.py — 本投稿のみ（サブ投稿なし・画像なし）
+import time
+import requests
+from config import THREADS_USER_ID, THREADS_ACCESS_TOKEN
 
-import tweepy
-from config import (
-    TWITTER_API_KEY, TWITTER_API_SECRET,
-    TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET,
-)
+THREADS_API = "https://graph.threads.net/v1.0"
 
+def create_container(text: str, reply_to_id: str = "") -> str | None:
+    url = f"{THREADS_API}/{THREADS_USER_ID}/threads"
+    params = {
+        "media_type":   "TEXT",
+        "text":         text,
+        "access_token": THREADS_ACCESS_TOKEN,
+    }
+    if reply_to_id:
+        params["reply_to_id"] = reply_to_id
+    res = requests.post(url, params=params, timeout=10)
+    data = res.json()
+    if "id" in data:
+        return data["id"]
+    print(f"  [Poster] Container error: {data}")
+    return None
 
-def post_tweet(tweet_text: str) -> dict:
-    """
-    本投稿のみ実行（引用リツイートなし・画像なし）
-    Returns: {"tweet_id": ..., "success": bool}
-    """
-    v2 = tweepy.Client(
-        consumer_key        = TWITTER_API_KEY,
-        consumer_secret     = TWITTER_API_SECRET,
-        access_token        = TWITTER_ACCESS_TOKEN,
-        access_token_secret = TWITTER_ACCESS_TOKEN_SECRET,
-    )
+def publish_container(container_id: str) -> str | None:
+    url = f"{THREADS_API}/{THREADS_USER_ID}/threads_publish"
+    params = {
+        "creation_id":  container_id,
+        "access_token": THREADS_ACCESS_TOKEN,
+    }
+    res = requests.post(url, params=params, timeout=10)
+    data = res.json()
+    if "id" in data:
+        return data["id"]
+    print(f"  [Poster] Publish error: {data}")
+    return None
 
+def refresh_token() -> bool:
+    """アクセストークンを自動更新（60日有効→延長）"""
+    url = "https://graph.threads.net/refresh_access_token"
+    params = {
+        "grant_type":   "th_refresh_token",
+        "access_token": THREADS_ACCESS_TOKEN,
+    }
     try:
-        resp     = v2.create_tweet(text=tweet_text)
-        tweet_id = str(resp.data["id"])
-        print(f"  [Poster] Posted: {tweet_id}")
-        print(f"           Text: {tweet_text[:80]}...")
-        return {"tweet_id": tweet_id, "success": True}
-    except tweepy.TweepyException as e:
-        print(f"  [Poster] Error: {e}")
+        res = requests.get(url, params=params, timeout=10)
+        data = res.json()
+        if "access_token" in data:
+            print(f"  [Poster] Token refreshed successfully")
+            return True
+        print(f"  [Poster] Token refresh failed: {data}")
+        return False
+    except Exception as e:
+        print(f"  [Poster] Token refresh error: {e}")
+        return False
+
+def post_tweet(tweet_text: str, original_url: str = "") -> dict:
+    """
+    Threadsに投稿する
+    - 本投稿: テキストのみ（URLなし）
+    - リプライ: 元記事フルURL
+    """
+    # URLが本文に含まれている場合は取り除く
+    main_text = tweet_text.split("\nhttp")[0].split("\nhttps")[0].strip()
+
+    # ① 本投稿コンテナ作成
+    container_id = create_container(main_text)
+    if not container_id:
         return {"success": False}
+
+    time.sleep(2)
+
+    # ② 本投稿を公開
+    post_id = publish_container(container_id)
+    if not post_id:
+        return {"success": False}
+
+    print(f"  [Poster] Posted: {post_id}")
+    print(f"           Text: {main_text[:80]}...")
+
+    # ③ フルURLをリプライに投稿（直後）
+    if original_url:
+        time.sleep(3)
+
+        reply_container_id = create_container(
+            f"🔗 Source: {original_url}",
+            reply_to_id=post_id
+        )
+        if reply_container_id:
+            time.sleep(2)
+            reply_id = publish_container(reply_container_id)
+            if reply_id:
+                print(f"  [Poster] Reply with URL: {reply_id}")
+
+    return {"post_id": post_id, "success": True}

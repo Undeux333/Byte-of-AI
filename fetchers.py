@@ -1,152 +1,141 @@
-import time
-import re
-import html
-import requests
 import feedparser
-from datetime import datetime, timedelta, timezone
+import requests
+from datetime import datetime, timezone
 
-import state_manager as sm
-from config import RSS_SOURCES, REDDIT_SOURCES, HN_TOP_LIMIT, HN_MIN_SCORE
+# ── RSS Sources ───────────────────────────────────────────────────────────────
+RSS_SOURCES = [
+    # World News
+    {"url": "http://feeds.bbci.co.uk/news/world/rss.xml",           "source": "BBC World",       "category": "world"},
+    {"url": "https://feeds.reuters.com/reuters/topNews",             "source": "Reuters",          "category": "world"},
+    {"url": "https://feeds.npr.org/1001/rss.xml",                    "source": "AP News",          "category": "world"},
+    {"url": "https://www.aljazeera.com/xml/rss/all.xml",             "source": "Al Jazeera",       "category": "world"},
+    {"url": "https://www.theguardian.com/world/rss",                 "source": "The Guardian",     "category": "world"},
+    {"url": "https://rss.nytimes.com/services/xml/rss/nyt/World.xml","source": "NYT World",        "category": "world"},
 
-HEADERS = {"User-Agent": "Mozilla/5.0 (GlobalNewsBot/2.0)"}
+    # Tech
+    {"url": "https://techcrunch.com/feed/",                          "source": "TechCrunch",       "category": "tech"},
+    {"url": "https://www.theverge.com/rss/index.xml",                "source": "The Verge",        "category": "tech"},
+    {"url": "http://feeds.arstechnica.com/arstechnica/index",        "source": "Ars Technica",     "category": "tech"},
+    {"url": "https://www.wired.com/feed/rss",                        "source": "Wired",            "category": "tech"},
 
+    # Science
+    {"url": "https://www.sciencedaily.com/rss/all.xml",              "source": "ScienceDaily",     "category": "science"},
+    {"url": "https://www.newscientist.com/feed/home/",               "source": "New Scientist",    "category": "science"},
 
-def _clean(text: str) -> str:
-    text = re.sub(r"<[^>]+>", " ", text or "")
-    return re.sub(r"\s+", " ", html.unescape(text)).strip()
+    # Entertainment / Youth culture
+    {"url": "https://www.rollingstone.com/feed/",                    "source": "Rolling Stone",    "category": "entertainment"},
+    {"url": "https://variety.com/feed/",                             "source": "Variety",          "category": "entertainment"},
+    {"url": "https://deadline.com/feed/",                            "source": "Deadline",         "category": "entertainment"},
+    {"url": "https://www.billboard.com/feed/",                       "source": "Billboard",        "category": "entertainment"},
+    {"url": "https://www.ign.com/rss/articles.rss",                  "source": "IGN",              "category": "entertainment"},
+    {"url": "https://kotaku.com/rss",                                "source": "Kotaku",           "category": "entertainment"},
 
+    # Sports
+    {"url": "https://www.espn.com/espn/rss/news",                    "source": "ESPN",             "category": "sports"},
+    {"url": "http://feeds.bbci.co.uk/sport/rss.xml",                 "source": "BBC Sport",        "category": "sports"},
+    {"url": "https://www.theringer.com/rss/index.xml",               "source": "The Ringer",       "category": "sports"},
 
-def _story(title, url, source, category, summary="", weight=5) -> dict:
-    return {
-        "title":    _clean(title)[:240],
-        "url":      url.strip(),
-        "source":   source,
-        "category": category,
-        "summary":  _clean(summary)[:500],
-        "weight":   weight,
-    }
+    # Psychology / Mental health
+    {"url": "https://www.psychologytoday.com/us/front-page/feed",    "source": "Psychology Today", "category": "psychology"},
+    {"url": "https://psypost.org/feed",                              "source": "PsyPost",          "category": "psychology"},
 
+    # Lifestyle / Relationships
+    {"url": "https://www.refinery29.com/en-us/rss.xml",             "source": "Refinery29",       "category": "lifestyle"},
+    {"url": "https://www.cosmopolitan.com/feed/",                    "source": "Cosmopolitan",     "category": "lifestyle"},
 
-# ─────────────────────────────────────────────────────────────
-# RSS
-# ─────────────────────────────────────────────────────────────
-def fetch_rss(state: dict) -> list[dict]:
-    results = []
-    cutoff  = datetime.now(timezone.utc) - timedelta(hours=30)
+    # Lifehacks / Tips
+    {"url": "https://lifehacker.com/feed/rss",                       "source": "Lifehacker",       "category": "lifestyle"},
 
-    for cfg in RSS_SOURCES:
+    # Business
+    {"url": "https://feeds.a.dj.com/rss/RSSWorldNews.xml",          "source": "CNN Business",     "category": "business"},
+
+    # Feel-good / Chaos
+    {"url": "https://www.upworthy.com/feed",                         "source": "Upworthy",         "category": "lifestyle"},
+    {"url": "https://www.goodnewsnetwork.org/feed/",                 "source": "Good News Network","category": "lifestyle"},
+]
+
+# ── HackerNews ────────────────────────────────────────────────────────────────
+HN_MIN_SCORE = 150
+
+def fetch_rss(seen_urls: set) -> list[dict]:
+    stories = []
+    for src in RSS_SOURCES:
         try:
-            feed  = feedparser.parse(cfg["url"])
+            feed = feedparser.parse(src["url"])
             count = 0
-            for entry in feed.entries[:18]:
-                url   = entry.get("link", "")
-                title = _clean(entry.get("title", ""))
-                if not url or not title or sm.is_seen(state, url):
+            for entry in feed.entries:
+                if count >= 10:
+                    break
+                url = entry.get("link", "")
+                if not url or url in seen_urls:
                     continue
-                pub = entry.get("published_parsed") or entry.get("updated_parsed")
-                if pub:
-                    pub_dt = datetime(*pub[:6], tzinfo=timezone.utc)
-                    if pub_dt < cutoff:
-                        continue
-                summary = _clean(entry.get("summary", entry.get("description", "")))
-                results.append(_story(title, url, cfg["name"], cfg["category"], summary, cfg["weight"]))
+                title = entry.get("title", "").strip()
+                summary = entry.get("summary", "")[:300]
+                if not title:
+                    continue
+                stories.append({
+                    "title":    title,
+                    "url":      url,
+                    "summary":  summary,
+                    "source":   src["source"],
+                    "category": src["category"],
+                    "weight":   5,
+                })
                 count += 1
-            print(f"  [RSS] {cfg['name']:<20} → {count}")
         except Exception as e:
-            print(f"  [RSS] {cfg['name']:<20} → ERROR: {e}")
-        time.sleep(0.2)
+            print(f"  [RSS] {src['source']} error: {e}")
+    return stories
 
-    return results
-
-
-# ─────────────────────────────────────────────────────────────
-# Reddit
-# ─────────────────────────────────────────────────────────────
-def fetch_reddit(state: dict) -> list[dict]:
-    results = []
-    for sub in REDDIT_SOURCES:
-        url = f"https://www.reddit.com/r/{sub['name']}/{sub['sort']}.json?limit={sub['limit']}"
-        try:
-            res   = requests.get(url, headers=HEADERS, timeout=10)
-            posts = res.json().get("data", {}).get("children", [])
-            count = 0
-            for post in posts:
-                p     = post.get("data", {})
-                ups   = p.get("ups", 0)
-                title = p.get("title", "")
-                link  = p.get("url") or f"https://reddit.com{p.get('permalink','')}"
-                if ups < sub["min_ups"] or not title or sm.is_seen(state, link):
-                    continue
-                if p.get("stickied"):
-                    continue
-                weight = min(9, 5 + int(ups / 5000))
-                results.append(_story(title, link, f"r/{sub['name']}", sub["category"],
-                                      p.get("selftext", "")[:400], weight))
-                count += 1
-            print(f"  [Reddit] r/{sub['name']:<16} → {count}")
-        except Exception as e:
-            print(f"  [Reddit] r/{sub['name']:<16} → ERROR: {e}")
-        time.sleep(0.8)
-    return results
-
-
-# ─────────────────────────────────────────────────────────────
-# Hacker News
-# ─────────────────────────────────────────────────────────────
-def fetch_hn(state: dict) -> list[dict]:
-    results = []
+def fetch_hackernews(seen_urls: set) -> list[dict]:
+    stories = []
     try:
-        top_ids = requests.get(
+        res = requests.get(
             "https://hacker-news.firebaseio.com/v0/topstories.json",
-            headers=HEADERS, timeout=10
-        ).json()[:HN_TOP_LIMIT]
-
-        count = 0
-        for sid in top_ids:
-            item  = requests.get(
-                f"https://hacker-news.firebaseio.com/v0/item/{sid}.json",
-                headers=HEADERS, timeout=8
-            ).json()
-            if not item or item.get("type") != "story":
+            timeout=10
+        )
+        ids = res.json()[:60]
+        for item_id in ids:
+            try:
+                item = requests.get(
+                    f"https://hacker-news.firebaseio.com/v0/item/{item_id}.json",
+                    timeout=5
+                ).json()
+                if not item or item.get("type") != "story":
+                    continue
+                score = item.get("score", 0)
+                if score < HN_MIN_SCORE:
+                    continue
+                url = item.get("url", "")
+                if not url or url in seen_urls:
+                    continue
+                title = item.get("title", "").strip()
+                stories.append({
+                    "title":    title,
+                    "url":      url,
+                    "summary":  f"HN Score: {score} | Comments: {item.get('descendants', 0)}",
+                    "source":   "HackerNews",
+                    "category": "tech",
+                    "weight":   min(10, score // 100),
+                })
+            except Exception:
                 continue
-            score = item.get("score", 0)
-            title = item.get("title", "")
-            url   = item.get("url") or f"https://news.ycombinator.com/item?id={sid}"
-            if score < HN_MIN_SCORE or not title or sm.is_seen(state, url):
-                continue
-            weight = min(9, 5 + int(score / 200))
-            results.append(_story(title, url, "HackerNews", "tech",
-                                  f"HN Score: {score}", weight))
-            count += 1
-            time.sleep(0.1)
-        print(f"  [HN]                      → {count}")
     except Exception as e:
-        print(f"  [HN] ERROR: {e}")
-    return results
+        print(f"  [HN] error: {e}")
+    return stories
 
-
-# ─────────────────────────────────────────────────────────────
-# 全ソース統合
-# ─────────────────────────────────────────────────────────────
 def collect_all(state: dict) -> list[dict]:
-    print("\n[Fetcher] Collecting from all sources...\n")
-    all_stories: list[dict] = []
+    seen = set(state.get("seen_urls", []))
+    stories = []
 
-    print("── RSS ──")
-    all_stories.extend(fetch_rss(state))
+    print("  [Fetcher] Fetching RSS...")
+    rss = fetch_rss(seen)
+    print(f"  [Fetcher] RSS: {len(rss)} stories")
+    stories.extend(rss)
 
-    print("\n── Reddit ──")
-    all_stories.extend(fetch_reddit(state))
+    print("  [Fetcher] Fetching HackerNews...")
+    hn = fetch_hackernews(seen)
+    print(f"  [Fetcher] HN: {len(hn)} stories")
+    stories.extend(hn)
 
-    print("\n── HackerNews ──")
-    all_stories.extend(fetch_hn(state))
-
-    seen_in_run: set[str] = set()
-    deduped = []
-    for s in all_stories:
-        if s["url"] not in seen_in_run:
-            seen_in_run.add(s["url"])
-            deduped.append(s)
-
-    print(f"\n[Fetcher] {len(deduped)} unique new stories")
-    return deduped
+    print(f"  [Fetcher] Total: {len(stories)} stories collected")
+    return stories

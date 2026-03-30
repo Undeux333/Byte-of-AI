@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-import random
+# main.py — メインパイプライン（本投稿のみ・画像なし）
+
 import sys
-import time
 from datetime import datetime, timezone
 
 import state_manager as sm
 import fetchers
 import scorer
 import poster
-from config import COLLECTION_INTERVAL_HOURS, SLEEP_MAX_SECONDS
+from config import COLLECTION_INTERVAL_HOURS
 
 DRY_RUN = "--dry-run" in sys.argv
 
@@ -19,37 +19,28 @@ def run():
     print(f"  DRY RUN: {DRY_RUN}")
     print(f"{'='*60}\n")
 
-    # ── ランダム待機（スパム検出回避）────────────────────────────
-    if not DRY_RUN:
-        sleep_sec = random.randint(0, SLEEP_MAX_SECONDS)
-        print(f"[Pipeline] Sleeping {sleep_sec}s for randomness...\n")
-        time.sleep(sleep_sec)
-
     state = sm.load()
     stats = sm.get_stats(state)
     print(f"[State] Queue={stats['queue_size']}  Posted={stats['total_posted']}  "
-          f"SeenURLs={stats['seen_urls']}  Carryover={stats['carryover']}")
+          f"SeenURLs={stats['seen_urls']}")
 
-    # ── Step 1: 収集 ──────────────────────────────────────────────
+    # ── Step 1: 収集が必要かチェック ─────────────────────────────
     if sm.collection_needed(state, COLLECTION_INTERVAL_HOURS):
         print(f"\n[Pipeline] Collection needed. Running...\n")
-
-        # アクセストークン自動更新
-        if not DRY_RUN:
-            poster.refresh_token()
 
         stories = fetchers.collect_all(state)
         for s in stories:
             sm.mark_seen(state, s["url"])
 
         if stories:
-            candidates = scorer.score_all(stories, state)
+            # top_n=2：2時間ごとの収集で1時間おきに1件投稿するため2件生成
+            candidates = scorer.score_all(stories, top_n=2)
             for c in candidates:
                 sm.add_to_queue(state, {
                     "tweet":          c["tweet"],
-                    "original_url":   c.get("original_url", c.get("url", "")),
                     "buzz_score":     c.get("buzz_score", 0),
                     "original_title": c.get("original_title", ""),
+                    "url":            c.get("url", ""),
                     "source":         c.get("source", ""),
                     "category":       c.get("category", "other"),
                 })
@@ -70,23 +61,14 @@ def run():
         sm.save(state)
         return
 
-    tweet_text   = item.get("tweet", "")
-    original_url = item.get("original_url", "")
-
     print(f"[Pipeline] Posting next item...")
-    print(f"  Tweet: {tweet_text[:100]}...")
-    print(f"  URL:   {original_url[:80]}")
+    print(f"  Tweet: {item['tweet'][:100]}...")
 
     if DRY_RUN:
         print("\n[Pipeline] DRY RUN — skipping actual post.")
-        print(f"\n--- TWEET PREVIEW ---\n{tweet_text}\n")
-        if original_url:
-            print(f"--- REPLY (URL) ---\n🔗 Source: {original_url}\n---")
+        print(f"\n--- TWEET PREVIEW ---\n{item['tweet']}\n---")
     else:
-        result = poster.post_tweet(
-            tweet_text=tweet_text,
-            original_url=original_url,
-        )
+        result = poster.post_tweet(tweet_text=item["tweet"])
         if result.get("success"):
             sm.mark_posted(state)
             print(f"[Pipeline] Posted successfully!")

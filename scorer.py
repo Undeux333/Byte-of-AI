@@ -1,47 +1,34 @@
-# scorer.py — Geminiスコアリング＋ツイート生成（例文ベース・サブ投稿なし・画像なし）
-
 import json
 import re
-import time
-import requests
+from datetime import datetime, timezone
 from google import genai
 
-from config import GEMINI_API_KEY, GEMINI_MODEL, CATEGORY_COLORS
+from config import (
+    GEMINI_API_KEY, GEMINI_MODEL,
+    POSTS_PER_COLLECTION, CARRYOVER_MAX, CARRYOVER_TTL_HOURS
+)
 
 client = genai.Client(api_key=GEMINI_API_KEY)
 
-
-# ── URL短縮 ───────────────────────────────────────────────────────────────
-
-def shorten_url(url: str) -> str:
-    try:
-        res = requests.get(
-            f"https://tinyurl.com/api-create.php?url={url}",
-            timeout=5
-        )
-        if res.status_code == 200 and res.text.startswith("http"):
-            return res.text.strip()
-    except Exception:
-        pass
-    return url
-
-
-# ── 予備選定（Geminiに渡す前に上位20件に絞る） ──────────────────────────
-
+# ── Rule-based pre-scoring ────────────────────────────────────────────────────
 HIGH_VALUE_SOURCES = {
-    "BBC World": 30, "Reuters": 30, "AP News": 28,
+    "BBC World": 30, "Reuters": 30, "AP News": 28, "NYT World": 28,
     "HackerNews": 25, "Al Jazeera": 22, "The Guardian": 22,
-    "ESPN": 20, "BBC Sport": 20, "TechCrunch": 20,
+    "ESPN": 20, "BBC Sport": 20, "TechCrunch": 20, "The Ringer": 18,
     "Variety": 18, "Deadline": 18, "ScienceDaily": 18,
     "The Verge": 16, "Ars Technica": 16, "Wired": 16,
     "Billboard": 15, "CNN Business": 15, "New Scientist": 15,
+    "Psychology Today": 18, "PsyPost": 16,
+    "Rolling Stone": 15, "IGN": 14, "Kotaku": 13,
+    "Refinery29": 13, "Cosmopolitan": 12,
+    "Lifehacker": 14, "Upworthy": 12, "Good News Network": 11,
 }
 
 CATEGORY_BONUS = {
-    "world": 15, "sports": 12, "entertainment": 10,
-    "tech": 10, "science": 8, "business": 8, "other": 5,
+    "world": 15, "sports": 12, "entertainment": 11,
+    "tech": 11, "science": 10, "psychology": 12,
+    "lifestyle": 10, "business": 8, "other": 5,
 }
-
 
 def rule_score(story: dict) -> int:
     score  = HIGH_VALUE_SOURCES.get(story.get("source", ""), 10)
@@ -55,14 +42,11 @@ def rule_score(story: dict) -> int:
             pass
     return min(100, score)
 
-
 def preselect(stories: list[dict], n: int = 20) -> list[dict]:
-    """同ソース最大2件制限で上位n件を選ぶ"""
     for s in stories:
         s["rule_score"] = rule_score(s)
     stories_sorted = sorted(stories, key=lambda x: x["rule_score"], reverse=True)
-    selected = []
-    source_count: dict[str, int] = {}
+    selected, source_count = [], {}
     for s in stories_sorted:
         src = s.get("source", "")
         if source_count.get(src, 0) < 2:
@@ -72,41 +56,48 @@ def preselect(stories: list[dict], n: int = 20) -> list[dict]:
             break
     return selected
 
-
-# ── Geminiプロンプト ──────────────────────────────────────────────────────
-
-SCORING_PROMPT = """You are a witty American in your 30s running a viral Twitter account.
+# ── Gemini prompt ─────────────────────────────────────────────────────────────
+SCORING_PROMPT = """You are a witty American in your 30s running a viral Threads account.
 You write like a real human — casual, sharp, and funny without trying too hard.
 
-Your tweet style must match these EXACT examples:
+TARGET AUDIENCE: Americans aged 10-30, male and female equally.
 
-[NEWS EXAMPLE]
-Israel just took out 3 journalists in Lebanon. Not militants.
-Journalists. At this point "press freedom" is just a phrase
-we say at awards shows.
+CONTENT MIX TO AIM FOR:
+- Comedy / memes / relatable moments (20%)
+- Work-life balance / job culture (15%)
+- World news / political irony (15%)
+- Dating / psychology / mental health (15%)
+- Nostalgia / pop culture (10%)
+- AI / tech irony (10%)
+- Sports moments (10%)
+- Chaos / food / feel-good (5%)
 
-[TECH EXAMPLE]
-OpenAI raised another $40B. That's enough money to solve
-climate change but sure, let's make chatbots smarter first.
-Priorities I guess.
+POST STRUCTURE — 3 parts, no line breaks between them:
+1. The fact — state it bluntly (1-2 lines)
+2. The twist — sharp observation or unexpected reframe (1-2 lines)
+3. The landing — 5 words or fewer, anticlimactic or absurd, never explain the joke
 
-[SPORTS EXAMPLE]
-Sabalenka just won the Miami Open again. At this point just
-hand her the trophy in January and save everyone the trip.
-Absolute unit.
-
-Notice the pattern:
-- State the fact bluntly and simply
-- Add ONE sharp, dry observation or contrast
-- End with a short punchy line (2-6 words) that lands the joke
-- Casual American English: contractions, "At this point", "sure", "I guess", "honestly"
-- NO hashtags. NO emojis. NO formal language. NOT a journalist. NOT a press release.
+STYLE RULES:
+- Write like someone talking, not writing
+- Casual American English: contractions, lowercase ok, imperfect punctuation fine
+- Natural spoken phrases: "ok but", "wait", "honestly", "I mean", "at this point", "sure", "right?", "wild", "no but seriously"
+- NEVER use: "lol", "ngl", "tbh" — those are typed, not spoken
+- No hashtags. No emojis. No URLs in the post.
 - Dark humor OK if it punches UP at power/institutions — never at victims
-- Max 200 characters (URL will be added separately after)
+- Sensitive topics OK: sex (as humor/observation, not explicit), politics (irony not partisan), mental health (relatable not clinical)
+- The landing should make people want to reply WITHOUT asking them to
+- Use irony, understatement, self-contradiction, or absurd specificity
+- Cut off abruptly — the silence after is part of the joke
+- Max 400 characters total
+
+EXAMPLES OF GOOD LANDINGS:
+"look at us." / "anyway." / "clearly." / "real step forward." / 
+"the dishes have never done anything wrong." / "respect the commitment." /
+"insurance doesn't cover it either."
 
 Here are {n} news stories. Do TWO things:
-1. Pick the BEST {top_n} stories Americans on Twitter will care about right now
-2. Write ONE tweet per story following the exact style above
+1. Pick the BEST {top_n} stories that will resonate most on Threads right now
+2. Write ONE post per story following the exact rules above
 
 Stories:
 {stories}
@@ -116,24 +107,73 @@ Respond ONLY with valid JSON (no markdown, no explanation):
   "selections": [
     {{
       "index": <0-based story index>,
-      "buzz_score": <0-100, how viral this will be on US Twitter>,
-      "tweet": "<max 200 chars, exact style as examples above>"
+      "buzz_score": <0-100>,
+      "post": "<max 400 chars, no URL, follow all style rules above>"
     }}
   ]
 }}
 """
 
+# ── Carryover logic ───────────────────────────────────────────────────────────
 
-# ── メイン処理 ────────────────────────────────────────────────────────────
+def load_carryover(state: dict) -> list[dict]:
+    """有効期限内の持ち越し候補を取得"""
+    now = datetime.now(timezone.utc)
+    carryover = []
+    for item in state.get("carryover_candidates", []):
+        try:
+            added_at = datetime.fromisoformat(item.get("added_at", ""))
+            if added_at.tzinfo is None:
+                added_at = added_at.replace(tzinfo=timezone.utc)
+            hours_old = (now - added_at).total_seconds() / 3600
+            if hours_old <= CARRYOVER_TTL_HOURS:
+                carryover.append(item)
+        except Exception:
+            continue
+    print(f"  [Scorer] Loaded {len(carryover)} carryover candidates (within {CARRYOVER_TTL_HOURS}h)")
+    return carryover
 
-def score_all(stories: list[dict], top_n: int = 2) -> list[dict]:
+def save_carryover(state: dict, rejected: list[dict]):
+    """ふるい落とされた上位候補を持ち越し保存"""
+    now = datetime.now(timezone.utc).isoformat()
+    seen_urls = set(state.get("seen_urls", []))
+    candidates = []
+    for item in rejected[:CARRYOVER_MAX]:
+        if item.get("url", "") not in seen_urls:
+            item["added_at"] = now
+            candidates.append(item)
+    state["carryover_candidates"] = candidates
+    print(f"  [Scorer] Saved {len(candidates)} carryover candidates")
+
+# ── Main scoring ──────────────────────────────────────────────────────────────
+
+def score_all(stories: list[dict], state: dict) -> list[dict]:
     """
-    ① ルールで20件に予備選定（Gemini不使用）
-    ② Geminiに20件を渡してスコアリング＋上位top_n件のツイート生成（1リクエスト）
-    ③ 短縮URLを付与して返す
+    ① ルール予備選定（20件）
+    ② 持ち越し候補と合算（最大28件）
+    ③ Geminiでスコアリング＋投稿生成（1回）
+    ④ 残り上位8件を持ち越し保存
     """
     print(f"\n[Scorer] Pre-selecting from {len(stories)} stories...")
     candidates = preselect(stories, n=20)
+
+    # 持ち越し候補を追加
+    carryover = load_carryover(state)
+    seen_urls = set(state.get("seen_urls", []))
+    for item in carryover:
+        if item.get("url", "") not in seen_urls:
+            candidates.append(item)
+
+    # 重複除去
+    seen = set()
+    unique = []
+    for c in candidates:
+        url = c.get("url", "")
+        if url not in seen:
+            seen.add(url)
+            unique.append(c)
+    candidates = unique
+
     print(f"[Scorer] Sending {len(candidates)} stories to {GEMINI_MODEL}...\n")
 
     stories_text = "\n".join([
@@ -142,9 +182,9 @@ def score_all(stories: list[dict], top_n: int = 2) -> list[dict]:
     ])
 
     prompt = SCORING_PROMPT.format(
-        n        = len(candidates),
-        top_n    = top_n,
-        stories  = stories_text,
+        n=len(candidates),
+        top_n=POSTS_PER_COLLECTION,
+        stories=stories_text,
     )
 
     try:
@@ -159,31 +199,36 @@ def score_all(stories: list[dict], top_n: int = 2) -> list[dict]:
         print(f"  [Scorer] Gemini error: {e}")
         return []
 
+    selected_indices = set()
     output = []
-    for sel in result.get("selections", [])[:top_n]:
+
+    for sel in result.get("selections", [])[:POSTS_PER_COLLECTION]:
         idx = sel.get("index", 0)
         if idx >= len(candidates):
             continue
-        story     = candidates[idx]
-        tweet_raw = sel.get("tweet", "").strip()
-        if not tweet_raw:
+        story    = candidates[idx]
+        post_raw = sel.get("post", "").strip()
+        if not post_raw:
             continue
 
-        # 短縮URL生成して末尾に付与
-        short_url  = shorten_url(story.get("url", ""))
-        tweet_full = f"{tweet_raw}\n{short_url}"
-
+        selected_indices.add(idx)
         output.append({
-            "tweet":          tweet_full,
+            "tweet":          post_raw,
+            "short_url":      "",
+            "original_url":   story.get("url", ""),
             "buzz_score":     sel.get("buzz_score", 0),
             "original_title": story["title"],
             "url":            story.get("url", ""),
             "source":         story.get("source", ""),
             "category":       story.get("category", "other"),
-            "color_hex":      CATEGORY_COLORS.get(story.get("category", "other"), "#2C3E50"),
         })
-        print(f"  [Scorer] Selected [{story['category']}] {story['title'][:55]}...")
-        print(f"           Tweet: {tweet_raw[:80]}...")
+        print(f"  [Scorer] Selected [{story['category']}] {story['title'][:60]}...")
+        print(f"           Post: {post_raw[:80]}...")
 
-    print(f"\n[Scorer] Generated {len(output)}/{top_n} tweets")
+    # 持ち越し候補保存（選ばれなかった上位8件）
+    rejected = [c for i, c in enumerate(candidates) if i not in selected_indices]
+    rejected_sorted = sorted(rejected, key=lambda x: x.get("rule_score", 0), reverse=True)
+    save_carryover(state, rejected_sorted)
+
+    print(f"\n[Scorer] Generated {len(output)}/{POSTS_PER_COLLECTION} posts")
     return output
