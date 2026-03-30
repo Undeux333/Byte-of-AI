@@ -100,21 +100,38 @@ STYLE RULES:
   Examples of correct "we": "We built this." / "We have feelings." / "We're paying for it."
   Examples of wrong "we": "We bombed Lebanon." / "We raised interest rates." ← use the actual subject instead
 
-LANDING LINE RULES — vary the technique across the 4 posts:
-For news / lifestyle / psychology / comedy posts, use ONE of:
-- Pretend ignorance: "it has never met me." / "nobody told it." / "they don't know."
-- Self-contradicting confession: "I've had four already." / "I do this too." / "asking for myself."
-- Absurd defense of the wrong thing: "the ocean didn't do anything wrong." / "the dishes are innocent."
-- Defeatist acceptance: "anyway." / "this is fine." / "sure." / "ok."
-- Off-target conclusion: "that's a tomorrow problem." / "insurance doesn't cover it either." / "not my department."
+THE LANDING LINE — the most important part of the post:
 
-For science / TIPS / tech facts posts, use ONE of:
-- Humble comparison: "meanwhile my laptop." / "we have wifi and still."
-- Dry admiration: "we built this." / "69KB. let that sink in."
-- Absurd scale: "that's it. that's the post." / "just so we're clear."
+PRIORITY RULE: The landing must sound like something a real American
+would say out loud in daily conversation. Not online slang. Not written-only.
+If it wouldn't work spoken aloud to a friend, rewrite it.
 
-The reader should finish the joke in their head — that moment is the laugh.
-Do NOT repeat the same landing technique across the 4 posts.
+Choose the right type for this story:
+
+TYPE A — Instant laugh (for news, politics, sports):
+Short and punchy — under 6 words.
+It should land before the reader sees it coming.
+Works spoken aloud on a stage.
+Examples: "Color me surprised." / "Respect the commitment." / "Nobody asked."
+
+TYPE B — Delayed laugh (for psychology, tech, daily life irony):
+Leave the most important word unsaid.
+If you can feel yourself explaining — stop one sentence earlier.
+The gap between what you said and what you meant — that's the laugh.
+Examples: "It has never met me." / "Meanwhile my laptop." / "I just wanted a sandwich."
+
+RULES FOR BOTH TYPES:
+- Never explain or summarize what just happened
+- Never end with a question
+- Avoid internet-only slang ("based", "slay", "no cap", "lmao", etc.)
+- Draw freely from comedy, irony, absurdity, everyday American expressions
+- Do NOT use the same type more than twice across the 4 posts in this batch
+- The reader should need a half-second to get it — that delay is where the laugh lives
+
+REFERENCE EXAMPLES (do not copy — use as quality benchmark only):
+"Nobody asked." / "Color me surprised." / "Hard pass." /
+"Meanwhile my laptop." / "Be my guest." / "Shocker." /
+"And yet here we are." / "Cool cool cool." / "I'm out."
 
 BUZZ SCORE CRITERIA:
 90-100: Will spark strong opinions, "same" replies, or debates

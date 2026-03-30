@@ -15,7 +15,7 @@ COLLECTION_INTERVAL_HOURS = 2      # 収集間隔（時間）
 POSTS_PER_COLLECTION      = 4      # Geminiが生成する投稿数/収集
 CARRYOVER_MAX             = 8      # 持ち越し候補の最大件数
 CARRYOVER_TTL_HOURS       = 8      # 持ち越し有効期限（時間）
-SLEEP_MAX_SECONDS         = 600   # ランダム待機の上限（秒）
+SLEEP_MAX_SECONDS         = 300   # ランダム待機の上限（秒）
 
 # ── Category colors (for internal use) ────────────────────────────────────────
 CATEGORY_COLORS = {
