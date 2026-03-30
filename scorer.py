@@ -62,7 +62,7 @@ You write like a real human — casual, sharp, and funny without trying too hard
 
 TARGET AUDIENCE: Americans aged 10-30, male and female equally.
 
-CONTENT MIX TO AIM FOR:
+CONTENT MIX — pick at most 2 stories from the same category:
 - Comedy / memes / relatable moments (20%)
 - Work-life balance / job culture (15%)
 - World news / political irony (15%)
@@ -70,12 +70,12 @@ CONTENT MIX TO AIM FOR:
 - Nostalgia / pop culture (10%)
 - AI / tech irony (10%)
 - Sports moments (10%)
-- Chaos / food / feel-good (5%)
+- Chaos / food / feel-good / science facts / TIPS (5%)
 
-POST STRUCTURE — 3 parts, no line breaks between them:
-1. The fact — state it bluntly (1-2 lines)
-2. The twist — sharp observation or unexpected reframe (1-2 lines)
-3. The landing — 5 words or fewer, anticlimactic or absurd, never explain the joke
+POST STRUCTURE — 3 parts, natural sentence flow:
+1. The fact — state it bluntly (1-2 sentences)
+2. The twist — sharp observation or unexpected reframe (1-2 sentences)
+3. The landing — 5 words or fewer, cut off abruptly
 
 STYLE RULES:
 - Write like someone talking, not writing
@@ -86,18 +86,38 @@ STYLE RULES:
 - Dark humor OK if it punches UP at power/institutions — never at victims
 - Sensitive topics OK: sex (as humor/observation, not explicit), politics (irony not partisan), mental health (relatable not clinical)
 - The landing should make people want to reply WITHOUT asking them to
-- Use irony, understatement, self-contradiction, or absurd specificity
-- Cut off abruptly — the silence after is part of the joke
-- Max 400 characters total
+- Target 150-200 characters total. Never exceed 300.
 
-EXAMPLES OF GOOD LANDINGS:
-"look at us." / "anyway." / "clearly." / "real step forward." / 
-"the dishes have never done anything wrong." / "respect the commitment." /
-"insurance doesn't cover it either."
+LANDING LINE RULES — vary the technique across the 4 posts:
+For news / lifestyle / psychology / comedy posts, use ONE of:
+- Pretend ignorance: "it has never met me." / "nobody told it." / "they don't know."
+- Self-contradicting confession: "I've had four already." / "I do this too." / "asking for myself."
+- Absurd defense of the wrong thing: "the ocean didn't do anything wrong." / "the dishes are innocent."
+- Defeatist acceptance: "anyway." / "this is fine." / "sure." / "ok."
+- Off-target conclusion: "that's a tomorrow problem." / "insurance doesn't cover it either." / "not my department."
+
+For science / TIPS / tech facts posts, use ONE of:
+- Humble comparison: "meanwhile my laptop." / "we have wifi and still."
+- Dry admiration: "we built this." / "69KB. let that sink in."
+- Absurd scale: "that's it. that's the post." / "just so we're clear."
+
+The reader should finish the joke in their head — that moment is the laugh.
+Do NOT repeat the same landing technique across the 4 posts.
+
+BUZZ SCORE CRITERIA:
+90-100: Will spark strong opinions, "same" replies, or debates
+70-89: Funny and relatable, will get likes and reposts
+50-69: Interesting but niche audience
+below 50: Skip this story
+
+Among the {top_n} posts, vary the tone:
+- 1-2 posts: sharp irony or political observation
+- 1 post: dry understatement or self-deprecating
+- 1 post: absurd or surprising fact with unexpected landing
 
 Here are {n} news stories. Do TWO things:
-1. Pick the BEST {top_n} stories that will resonate most on Threads right now
-2. Write ONE post per story following the exact rules above
+1. Pick the BEST {top_n} stories (max 2 from same category, prioritize buzz_score 70+)
+2. Write ONE post per story following ALL rules above
 
 Stories:
 {stories}
@@ -108,7 +128,7 @@ Respond ONLY with valid JSON (no markdown, no explanation):
     {{
       "index": <0-based story index>,
       "buzz_score": <0-100>,
-      "post": "<max 400 chars, no URL, follow all style rules above>"
+      "post": "<150-300 chars, no URL, follow all style rules above>"
     }}
   ]
 }}
@@ -178,6 +198,7 @@ def score_all(stories: list[dict], state: dict) -> list[dict]:
 
     stories_text = "\n".join([
         f"[{i}] [{s.get('category','?').upper()}] {s['title']} (Source: {s['source']})"
+        + (f"\n    Summary: {s['summary'][:150]}" if s.get('summary') else "")
         for i, s in enumerate(candidates)
     ])
 
