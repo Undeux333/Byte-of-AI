@@ -2,14 +2,6 @@
   "last_collected": "2026-03-30T09:58:31.545616+00:00",
   "queue": [
     {
-      "tweet": "Spurs are scrambling for a new manager after admitting the Igor Tudor hire was a total disaster. They really cannot afford another mess at this point. This is fine.",
-      "original_url": "https://www.bbc.com/sport/football/articles/c0le1l7dkdzo?at_medium=RSS&at_campaign=rss",
-      "buzz_score": 78,
-      "original_title": "Spurs have addressed their Tudor error - but cannot afford another",
-      "source": "BBC Sport",
-      "category": "sports"
-    },
-    {
       "tweet": "Brent crude is hitting $116 a barrel because someone thinks we should just take the oil. I guess diplomacy is officially out of style. Cool cool cool.",
       "original_url": "https://www.theguardian.com/business/2026/mar/30/price-of-oil-trump-iran-stock-markets-middle-east",
       "buzz_score": 95,
@@ -482,7 +474,7 @@
   ],
   "carryover_candidates": [],
   "stats": {
-    "total_posted": 3,
+    "total_posted": 4,
     "total_collected": 8
   }
 }
