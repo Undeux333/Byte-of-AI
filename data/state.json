@@ -2,26 +2,6 @@
   "last_collected": "2026-03-31T05:24:51.607464+00:00",
   "queue": [
     {
-      "tweet": "South Carolina just made their sixth straight Final Four appearance after crushing TCU. Nobody asked.",
-      "original_url": "https://www.espn.com/womens-college-basketball/story/_/id/48352812/south-carolina-routs-tcu-reach-sixth-straight-final-four",
-      "buzz_score": 75,
-      "buzz_score2": 100,
-      "rewrite_count": 0,
-      "original_title": "S. Carolina into sixth straight Final Four over TCU",
-      "source": "ESPN",
-      "category": "sports"
-    },
-    {
-      "tweet": "Wales and Northern Ireland are playing a friendly on Tuesday because they both managed to lose their World Cup qualifiers. I just wanted a vacation.",
-      "original_url": "https://www.bbc.com/sport/football/articles/cwyvnrqd3zxo?at_medium=RSS&at_campaign=rss",
-      "buzz_score": 82,
-      "buzz_score2": 100,
-      "rewrite_count": 0,
-      "original_title": "Wales v Northern Ireland - the match nobody wants",
-      "source": "BBC Sport",
-      "category": "sports"
-    },
-    {
       "tweet": "Fred again.. just dropped a historic set with Thomas Bangalter from Daft Punk. I'm sitting here in sweatpants and haven't left my couch all day.",
       "original_url": "https://hypebeast.com/2026/3/watch-fred-again-historic-live-set-with-daft-punk-thomas-bangalter",
       "buzz_score": 88,
@@ -1102,11 +1082,13 @@
   ],
   "carryover_candidates": [],
   "stats": {
-    "total_posted": 29,
+    "total_posted": 31,
     "total_collected": 40
   },
   "recent_post_ids": [
     "18397670413148666",
-    "18086758415002309"
+    "18086758415002309",
+    "18073919630635492",
+    "18419284885127837"
   ]
 }
