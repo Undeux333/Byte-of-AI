@@ -4,6 +4,7 @@ from config import THREADS_USER_ID, THREADS_ACCESS_TOKEN
 
 THREADS_API = "https://graph.threads.net/v1.0"
 
+
 def create_container(text: str, reply_to_id: str = "") -> str | None:
     url = f"{THREADS_API}/{THREADS_USER_ID}/threads"
     params = {
@@ -13,12 +14,23 @@ def create_container(text: str, reply_to_id: str = "") -> str | None:
     }
     if reply_to_id:
         params["reply_to_id"] = reply_to_id
-    res = requests.post(url, params=params, timeout=10)
-    data = res.json()
-    if "id" in data:
-        return data["id"]
-    print(f"  [Poster] Container error: {data}")
+
+    for attempt in range(3):  # 最大3回リトライ
+        try:
+            res = requests.post(url, params=params, timeout=30)
+            data = res.json()
+            if "id" in data:
+                return data["id"]
+            print(f"  [Poster] Container error: {data}")
+            return None
+        except requests.exceptions.ReadTimeout:
+            print(f"  [Poster] Timeout on create_container attempt {attempt + 1}/3")
+            if attempt < 2:
+                time.sleep(5)
+
+    print(f"  [Poster] create_container failed after 3 attempts")
     return None
+
 
 def publish_container(container_id: str) -> str | None:
     url = f"{THREADS_API}/{THREADS_USER_ID}/threads_publish"
@@ -26,12 +38,23 @@ def publish_container(container_id: str) -> str | None:
         "creation_id":  container_id,
         "access_token": THREADS_ACCESS_TOKEN,
     }
-    res = requests.post(url, params=params, timeout=10)
-    data = res.json()
-    if "id" in data:
-        return data["id"]
-    print(f"  [Poster] Publish error: {data}")
+
+    for attempt in range(3):  # 最大3回リトライ
+        try:
+            res = requests.post(url, params=params, timeout=30)
+            data = res.json()
+            if "id" in data:
+                return data["id"]
+            print(f"  [Poster] Publish error: {data}")
+            return None
+        except requests.exceptions.ReadTimeout:
+            print(f"  [Poster] Timeout on publish_container attempt {attempt + 1}/3")
+            if attempt < 2:
+                time.sleep(5)
+
+    print(f"  [Poster] publish_container failed after 3 attempts")
     return None
+
 
 def refresh_token() -> bool:
     """アクセストークンを自動更新（60日有効→延長）"""
@@ -40,17 +63,27 @@ def refresh_token() -> bool:
         "grant_type":   "th_refresh_token",
         "access_token": THREADS_ACCESS_TOKEN,
     }
-    try:
-        res = requests.get(url, params=params, timeout=10)
-        data = res.json()
-        if "access_token" in data:
-            print(f"  [Poster] Token refreshed successfully")
-            return True
-        print(f"  [Poster] Token refresh failed: {data}")
-        return False
-    except Exception as e:
-        print(f"  [Poster] Token refresh error: {e}")
-        return False
+
+    for attempt in range(3):  # 最大3回リトライ
+        try:
+            res = requests.get(url, params=params, timeout=30)
+            data = res.json()
+            if "access_token" in data:
+                print(f"  [Poster] Token refreshed successfully")
+                return True
+            print(f"  [Poster] Token refresh failed: {data}")
+            return False
+        except requests.exceptions.ReadTimeout:
+            print(f"  [Poster] Timeout on refresh_token attempt {attempt + 1}/3")
+            if attempt < 2:
+                time.sleep(5)
+        except Exception as e:
+            print(f"  [Poster] Token refresh error: {e}")
+            return False
+
+    print(f"  [Poster] refresh_token failed after 3 attempts")
+    return False
+
 
 def post_tweet(tweet_text: str, original_url: str = "") -> dict:
     """
@@ -65,7 +98,6 @@ def post_tweet(tweet_text: str, original_url: str = "") -> dict:
     container_id = create_container(main_text)
     if not container_id:
         return {"success": False}
-
     time.sleep(2)
 
     # ② 本投稿を公開
@@ -79,7 +111,6 @@ def post_tweet(tweet_text: str, original_url: str = "") -> dict:
     # ③ フルURLをリプライに投稿（直後）
     if original_url:
         time.sleep(3)
-
         reply_container_id = create_container(
             f"🔗 Source: {original_url}",
             reply_to_id=post_id
