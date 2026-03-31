@@ -156,6 +156,9 @@ def get_replies(post_id: str) -> list[dict]:
             url = data.get("paging", {}).get("next")
             params = {}  # 2ページ目以降はURLにパラメータ込み
         own_username = _get_own_username()
+        print(f"  [Poster] Own username: '{own_username}'")
+        for r in all_replies:
+            print(f"  [Poster] Reply username: '{r.get('username')}'")
         # 自分自身の返信を除外
         filtered = [r for r in all_replies if r.get("username") != own_username]
         print(f"  [Poster] {len(all_replies)} replies found, {len(filtered)} after filtering own replies")
