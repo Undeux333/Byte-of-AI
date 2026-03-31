@@ -142,7 +142,7 @@ def get_replies(post_id: str) -> list[dict]:
     """投稿への返信一覧を取得する（自分の返信は除外・ページネーション対応）"""
     url = f"{THREADS_API}/{post_id}/conversation"
     params = {
-        "fields":       "id,text,username,timestamp",
+        "fields":       "id,text,username,timestamp,is_reply_owned_by_me",
         "access_token": THREADS_ACCESS_TOKEN,
         "limit":        100,
     }
@@ -155,12 +155,8 @@ def get_replies(post_id: str) -> list[dict]:
             # 次のページがあれば取得
             url = data.get("paging", {}).get("next")
             params = {}  # 2ページ目以降はURLにパラメータ込み
-        own_username = _get_own_username()
-        print(f"  [Poster] Own username: '{own_username}'")
-        for r in all_replies:
-            print(f"  [Poster] Reply username: '{r.get('username')}'")
-        # 自分自身の返信を除外
-        filtered = [r for r in all_replies if r.get("username") != own_username]
+        # is_reply_owned_by_meで自分の返信を除外（公開・非公開問わず確実に判定）
+        filtered = [r for r in all_replies if not r.get("is_reply_owned_by_me", True)]
         print(f"  [Poster] {len(all_replies)} replies found, {len(filtered)} after filtering own replies")
         return filtered
     except Exception as e:
