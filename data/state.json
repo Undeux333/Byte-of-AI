@@ -2,22 +2,6 @@
   "last_collected": "2026-03-31T05:24:51.607464+00:00",
   "queue": [
     {
-      "tweet": "The Leafs are about to miss the playoffs for the first time in years so they fired the GM today. Meanwhile the roster.",
-      "original_url": "https://www.espn.com/nhl/story/_/id/48351703/toronto-maple-leafs-fire-general-manager-brad-treliving",
-      "buzz_score": 90,
-      "original_title": "Leafs, on brink of elimination, fire GM Treliving",
-      "source": "ESPN",
-      "category": "sports"
-    },
-    {
-      "tweet": "OpenAI was reportedly losing $1M a day on that video app. They spent a fortune to replace jobs that weren't even looking for a replacement.",
-      "original_url": "https://kotaku.com/openais-video-plagiarism-app-sora-was-reportedly-losing-1-million-a-day-2000683277",
-      "buzz_score": 85,
-      "original_title": "OpenAI’s Video Plagiarism App Sora Was Reportedly Losing $1 Million A Day",
-      "source": "Kotaku",
-      "category": "entertainment"
-    },
-    {
       "tweet": "Disney debuted their new AI Olaf animatronic at Disneyland Paris and the thing immediately collapsed in a heap. Nobody asked.",
       "original_url": "https://www.polygon.com/disney-parks-ai-olaf-animatronic-malfunction/",
       "buzz_score": 85,
@@ -1046,7 +1030,7 @@
   ],
   "carryover_candidates": [],
   "stats": {
-    "total_posted": 35,
+    "total_posted": 37,
     "total_collected": 40
   },
   "recent_post_ids": [
@@ -1057,6 +1041,8 @@
     "18042938006780281",
     "18213015463321087",
     "18333863695218552",
-    "18069786554278909"
+    "18069786554278909",
+    "17958181014100094",
+    "18118033792647987"
   ]
 }
