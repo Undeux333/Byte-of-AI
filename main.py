@@ -88,10 +88,10 @@ def run():
                 print(f"[Pipeline] Post {post_num} failed — item returned to queue.")
                 break  # 失敗したら2件目は試みない
 
-        # 2件目の前に10秒待機（連投対策）
+        # 2件目の前に5分待機（連投対策）
         if post_num == 1:
-            print(f"[Pipeline] Waiting 10s before next post...")
-            time.sleep(10)
+            print(f"[Pipeline] Waiting 5 minutes before next post...")
+            time.sleep(300)
 
     sm.save(state)
     stats = sm.get_stats(state)
