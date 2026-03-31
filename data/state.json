@@ -2,22 +2,6 @@
   "last_collected": "2026-03-31T02:38:11.034509+00:00",
   "queue": [
     {
-      "tweet": "The government is rolling out apps that supposedly spy harder than the ones they just banned. I love how we are just openly living in a parody now. Incredible stuff.",
-      "original_url": "https://www.sambent.com/the-white-house-app-has-huawei-spyware-and-an-ice-tip-line/",
-      "buzz_score": 85,
-      "original_title": "Fedware: Government apps that spy harder than the apps they ban",
-      "source": "HackerNews",
-      "category": "tech"
-    },
-    {
-      "tweet": "Marco Rubio thinks regional stability is just about deleting missiles. It is nice when people in charge treat the entire globe like a game of Risk. Color me surprised.",
-      "original_url": "https://www.aljazeera.com/video/newsfeed/2026/3/30/we-have-to-destroy-irans-ability-to-launch-missiles-rubio-says?traffic_source=rss",
-      "buzz_score": 88,
-      "original_title": "‘We have to destroy Iran’s ability to launch missiles’, Rubio says",
-      "source": "Al Jazeera",
-      "category": "world"
-    },
-    {
       "tweet": "Eidos Montreal just lost 124 people after 19 years of building the Deus Ex series. I mean, who needs job security when you have corporate synergy. Just business as usual.",
       "original_url": "https://kotaku.com/eidos-montreal-deus-ex-sequel-layoffs-2000683242",
       "buzz_score": 80,
@@ -1094,7 +1078,7 @@
   ],
   "carryover_candidates": [],
   "stats": {
-    "total_posted": 21,
+    "total_posted": 23,
     "total_collected": 32
   }
 }
