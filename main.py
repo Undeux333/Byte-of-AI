@@ -31,7 +31,8 @@ def run():
         if last_dt.tzinfo is None:
             last_dt = last_dt.replace(tzinfo=timezone.utc)
         next_dt = last_dt + timedelta(hours=COLLECTION_INTERVAL_HOURS)
-        print(f"[State] Next collection: {next_dt.strftime('%Y-%m-%d %H:%M UTC')}")
+        JST = timezone(timedelta(hours=9))
+        print(f"[State] Next collection: {next_dt.astimezone(JST).strftime('%Y-%m-%d %H:%M JST')}")
     else:
         print(f"[State] Next collection: running now (first time)")
 
