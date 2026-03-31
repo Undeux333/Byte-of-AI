@@ -2,7 +2,7 @@
 
 import sys
 import time
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 
 import state_manager as sm
 import fetchers
@@ -24,6 +24,17 @@ def run():
     print(f"[State] Queue={stats['queue_size']} Posted={stats['total_posted']} "
           f"SeenURLs={stats['seen_urls']} Carryover={stats['carryover']}")
 
+    # 次回収集予定時刻を表示
+    last = state.get("last_collected")
+    if last:
+        last_dt = datetime.fromisoformat(last)
+        if last_dt.tzinfo is None:
+            last_dt = last_dt.replace(tzinfo=timezone.utc)
+        next_dt = last_dt + timedelta(hours=COLLECTION_INTERVAL_HOURS)
+        print(f"[State] 次回収集予定: {next_dt.strftime('%Y-%m-%d %H:%M UTC')}")
+    else:
+        print(f"[State] 次回収集予定: 初回収集を実行します")
+
     # ── Step 1: 収集 ──────────────────────────────────────────────
     if sm.collection_needed(state, COLLECTION_INTERVAL_HOURS):
         print(f"\n[Pipeline] Collection needed. Running...\n")
@@ -42,6 +53,8 @@ def run():
                     "tweet":          c["tweet"],
                     "original_url":   c.get("original_url", c.get("url", "")),
                     "buzz_score":     c.get("buzz_score", 0),
+                    "buzz_score2":    c.get("buzz_score2", 0),
+                    "rewrite_count":  c.get("rewrite_count", 0),
                     "original_title": c.get("original_title", ""),
                     "source":         c.get("source", ""),
                     "category":       c.get("category", "other"),
