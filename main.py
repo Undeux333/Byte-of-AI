@@ -31,9 +31,9 @@ def run():
         if last_dt.tzinfo is None:
             last_dt = last_dt.replace(tzinfo=timezone.utc)
         next_dt = last_dt + timedelta(hours=COLLECTION_INTERVAL_HOURS)
-        print(f"[State] 次回収集予定: {next_dt.strftime('%Y-%m-%d %H:%M UTC')}")
+        print(f"[State] Next collection: {next_dt.strftime('%Y-%m-%d %H:%M UTC')}")
     else:
-        print(f"[State] 次回収集予定: 初回収集を実行します")
+        print(f"[State] Next collection: running now (first time)")
 
     # ── Step 1: 収集 ──────────────────────────────────────────────
     if sm.collection_needed(state, COLLECTION_INTERVAL_HOURS):
