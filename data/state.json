@@ -2,22 +2,6 @@
   "last_collected": "2026-03-31T05:24:51.607464+00:00",
   "queue": [
     {
-      "tweet": "OpenAI is now letting Copilot inject ads into your code. I am sure our software definitely needed more revenue streams and fewer working features. The product and the profit model are different documents.",
-      "original_url": "https://notes.zachmanson.com/copilot-edited-an-ad-into-my-pr/",
-      "buzz_score": 95,
-      "original_title": "Copilot edited an ad into my PR",
-      "source": "HackerNews",
-      "category": "tech"
-    },
-    {
-      "tweet": "Baseball is using a robo-judge to call strikes, and players are finally getting the accurate calls they deserve. Respect the commitment.",
-      "original_url": "https://kotaku.com/baseball-players-are-using-a-new-robo-judge-to-instantly-humiliate-shame-umpires-and-crowds-are-going-wild-2000683267",
-      "buzz_score": 90,
-      "original_title": "Baseball Players Are Using A New Robo-Judge To Instantly Humiliate Umpires And Crowds Love It",
-      "source": "Kotaku",
-      "category": "entertainment"
-    },
-    {
       "tweet": "The Leafs are about to miss the playoffs for the first time in years so they fired the GM today. Meanwhile the roster.",
       "original_url": "https://www.espn.com/nhl/story/_/id/48351703/toronto-maple-leafs-fire-general-manager-brad-treliving",
       "buzz_score": 90,
@@ -1062,7 +1046,7 @@
   ],
   "carryover_candidates": [],
   "stats": {
-    "total_posted": 33,
+    "total_posted": 35,
     "total_collected": 40
   },
   "recent_post_ids": [
@@ -1071,6 +1055,8 @@
     "18073919630635492",
     "18419284885127837",
     "18042938006780281",
-    "18213015463321087"
+    "18213015463321087",
+    "18333863695218552",
+    "18069786554278909"
   ]
 }
