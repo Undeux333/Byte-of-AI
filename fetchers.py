@@ -67,6 +67,29 @@ RSS_SOURCES = [
 # ── HackerNews ────────────────────────────────────────────────────────────────
 HN_MIN_SCORE = 150
 
+
+def _freshness_weight(entry: dict) -> int:
+    """記事の公開日時から鮮度スコアを計算（0〜10）"""
+    published = entry.get("published_parsed") or entry.get("updated_parsed")
+    if not published:
+        return 5  # 日時不明は中間値
+    try:
+        pub_dt = datetime(*published[:6], tzinfo=timezone.utc)
+        hours_old = (datetime.now(timezone.utc) - pub_dt).total_seconds() / 3600
+        if hours_old <= 6:
+            return 5
+        elif hours_old <= 12:
+            return 3
+        elif hours_old <= 24:
+            return 2
+        elif hours_old <= 48:
+            return 1
+        else:
+            return 0
+    except Exception:
+        return 5
+
+
 def fetch_rss(seen_urls: set) -> list[dict]:
     stories = []
     for src in RSS_SOURCES:
@@ -89,12 +112,13 @@ def fetch_rss(seen_urls: set) -> list[dict]:
                     "summary":  summary,
                     "source":   src["source"],
                     "category": src["category"],
-                    "weight":   5,
+                    "weight":   _freshness_weight(entry),  # 鮮度スコアをweightに反映
                 })
                 count += 1
         except Exception as e:
             print(f"  [RSS] {src['source']} error: {e}")
     return stories
+
 
 def fetch_hackernews(seen_urls: set) -> list[dict]:
     stories = []
@@ -119,19 +143,39 @@ def fetch_hackernews(seen_urls: set) -> list[dict]:
                 if not url or url in seen_urls:
                     continue
                 title = item.get("title", "").strip()
+
+                # HNはtimeフィールド（UNIXタイムスタンプ）で鮮度を計算
+                hn_time = item.get("time")
+                if hn_time:
+                    pub_dt = datetime.fromtimestamp(hn_time, tz=timezone.utc)
+                    hours_old = (datetime.now(timezone.utc) - pub_dt).total_seconds() / 3600
+                    if hours_old <= 6:
+                        freshness = 5
+                    elif hours_old <= 12:
+                        freshness = 3
+                    elif hours_old <= 24:
+                        freshness = 2
+                    elif hours_old <= 48:
+                        freshness = 1
+                    else:
+                        freshness = 0
+                else:
+                    freshness = 3
+
                 stories.append({
                     "title":    title,
                     "url":      url,
                     "summary":  f"HN Score: {score} | Comments: {item.get('descendants', 0)}",
                     "source":   "HackerNews",
                     "category": "tech",
-                    "weight":   min(10, score // 100),
+                    "weight":   min(10, freshness + (score // 200)),  # 鮮度 + HNスコアの加算
                 })
             except Exception:
                 continue
     except Exception as e:
         print(f"  [HN] error: {e}")
     return stories
+
 
 def collect_all(state: dict) -> list[dict]:
     seen = set(state.get("seen_urls", []))
