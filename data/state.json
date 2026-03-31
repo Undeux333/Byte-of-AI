@@ -2,26 +2,6 @@
   "last_collected": "2026-03-31T05:24:51.607464+00:00",
   "queue": [
     {
-      "tweet": "Experts are now using AI to track exactly when Japan's cherry blossoms will bloom. I've spent my whole life just trying to remember to water my own houseplants.",
-      "original_url": "https://www.nytimes.com/2026/03/31/world/asia/japan-cherry-blossoms-ai.html",
-      "buzz_score": 75,
-      "buzz_score2": 100,
-      "rewrite_count": 0,
-      "original_title": "When Will Japan’s Cherry Blossoms Bloom? A.I. Can Help Answer That",
-      "source": "NYT World",
-      "category": "world"
-    },
-    {
-      "tweet": "China is banning the practice of storing family remains in residential apartments as cemetery space runs out. The housing market has officially followed us into the afterlife.",
-      "original_url": "https://www.theguardian.com/world/2026/mar/31/china-bans-storing-ashes-apartments",
-      "buzz_score": 78,
-      "buzz_score2": 100,
-      "rewrite_count": 0,
-      "original_title": "China to ban storing remains of dead in ‘bone ash apartments’",
-      "source": "The Guardian",
-      "category": "world"
-    },
-    {
       "tweet": "South Carolina just made their sixth straight Final Four appearance after crushing TCU. Nobody asked.",
       "original_url": "https://www.espn.com/womens-college-basketball/story/_/id/48352812/south-carolina-routs-tcu-reach-sixth-straight-final-four",
       "buzz_score": 75,
@@ -1122,7 +1102,11 @@
   ],
   "carryover_candidates": [],
   "stats": {
-    "total_posted": 27,
+    "total_posted": 29,
     "total_collected": 40
-  }
+  },
+  "recent_post_ids": [
+    "18397670413148666",
+    "18086758415002309"
+  ]
 }
