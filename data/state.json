@@ -2,16 +2,6 @@
   "last_collected": "2026-03-31T07:43:10.585123+00:00",
   "queue": [
     {
-      "tweet": "Allbirds is selling for $39M after raising ten times that much at their IPO. Someone really took the concept of buying high and selling low a bit too seriously.",
-      "original_url": "https://techcrunch.com/2026/03/30/allbirds-is-selling-for-39-million-it-raised-nearly-10-times-that-amount-in-its-ipo/",
-      "buzz_score": 80,
-      "buzz_score2": 95,
-      "rewrite_count": 0,
-      "original_title": "Allbirds is selling for $39 million. It raised nearly 10 times that amount in its IPO.",
-      "source": "TechCrunch",
-      "category": "tech"
-    },
-    {
       "tweet": "Production on the new Tomb Raider show is halted because Sophie Turner got injured. Color me surprised that a show about a high-octane adventurer is actually dangerous.",
       "original_url": "https://kotaku.com/sophie-turner-injury-halts-tomb-raider-tv-series-production-2000683144",
       "buzz_score": 75,
@@ -1090,7 +1080,7 @@
   ],
   "carryover_candidates": [],
   "stats": {
-    "total_posted": 39,
+    "total_posted": 40,
     "total_collected": 48
   },
   "recent_post_ids": [
@@ -1107,6 +1097,7 @@
     "18074234801231170",
     "18048141323734146",
     "17875833054439776",
-    "17865225171666182"
+    "17865225171666182",
+    "18098585684093900"
   ]
 }
