@@ -68,6 +68,11 @@ def mark_seen(state: dict, url: str):
 
 def add_to_queue(state: dict, item: dict):
     state.setdefault("queue", []).append(item)
+    # buzz_score2の高い順に並び替え（なければbuzz_scoreで代替）
+    state["queue"].sort(
+        key=lambda x: x.get("buzz_score2", x.get("buzz_score", 0)),
+        reverse=True
+    )
 
 def pop_next(state: dict) -> dict | None:
     queue = state.get("queue", [])
