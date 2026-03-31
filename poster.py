@@ -124,17 +124,42 @@ def post_tweet(tweet_text: str, original_url: str = "") -> dict:
     return {"post_id": post_id, "success": True}
 
 
-def get_replies(post_id: str) -> list[dict]:
-    """投稿への返信一覧を取得する"""
-    url = f"{THREADS_API}/{post_id}/replies"
+def _get_own_username() -> str:
+    """自分のユーザー名を取得"""
+    url = f"{THREADS_API}/{THREADS_USER_ID}"
     params = {
-        "fields":       "id,text,username,timestamp",
+        "fields":       "username",
         "access_token": THREADS_ACCESS_TOKEN,
     }
     try:
         res = requests.get(url, params=params, timeout=30)
-        data = res.json()
-        return data.get("data", [])
+        return res.json().get("username", "")
+    except Exception:
+        return ""
+
+
+def get_replies(post_id: str) -> list[dict]:
+    """投稿への返信一覧を取得する（自分の返信は除外・ページネーション対応）"""
+    url = f"{THREADS_API}/{post_id}/replies"
+    params = {
+        "fields":       "id,text,username,timestamp",
+        "access_token": THREADS_ACCESS_TOKEN,
+        "limit":        100,
+    }
+    all_replies = []
+    try:
+        while url:
+            res = requests.get(url, params=params, timeout=30)
+            data = res.json()
+            all_replies.extend(data.get("data", []))
+            # 次のページがあれば取得
+            url = data.get("paging", {}).get("next")
+            params = {}  # 2ページ目以降はURLにパラメータ込み
+        own_username = _get_own_username()
+        # 自分自身の返信を除外
+        filtered = [r for r in all_replies if r.get("username") != own_username]
+        print(f"  [Poster] {len(all_replies)} replies found, {len(filtered)} after filtering own replies")
+        return filtered
     except Exception as e:
         print(f"  [Poster] get_replies error: {e}")
         return []
