@@ -26,7 +26,6 @@ def load() -> dict:
             return state
         except Exception as e:
             print(f"[State] Load error: {e} — using default")
-    # ルートのstate.jsonも確認（移行用）
     if os.path.exists("state.json"):
         try:
             with open("state.json", "r", encoding="utf-8") as f:
@@ -68,7 +67,7 @@ def mark_seen(state: dict, url: str):
 
 def add_to_queue(state: dict, item: dict):
     state.setdefault("queue", []).append(item)
-    # buzz_score2の高い順に並び替え（なければbuzz_scoreで代替）
+    # buzz_score2の高い順に並び替え
     state["queue"].sort(
         key=lambda x: x.get("buzz_score2", x.get("buzz_score", 0)),
         reverse=True
@@ -93,28 +92,3 @@ def get_stats(state: dict) -> dict:
         "seen_urls":     len(state.get("seen_urls", [])),
         "carryover":     len(state.get("carryover_candidates", [])),
     }
-
-
-def get_liked_reply_ids(state: dict) -> set:
-    """ライク済みの返信IDセットを取得"""
-    return set(state.get("liked_reply_ids", []))
-
-def add_liked_reply_id(state: dict, reply_id: str):
-    """ライク済み返信IDを追加（最大1000件）"""
-    liked = state.setdefault("liked_reply_ids", [])
-    if reply_id not in liked:
-        liked.append(reply_id)
-    if len(liked) > 1000:
-        state["liked_reply_ids"] = liked[-1000:]
-
-def get_recent_post_ids(state: dict) -> list:
-    """直近の投稿IDリストを取得"""
-    return state.get("recent_post_ids", [])
-
-def add_recent_post_id(state: dict, post_id: str):
-    """投稿IDを保存（最大50件）"""
-    ids = state.setdefault("recent_post_ids", [])
-    if post_id not in ids:
-        ids.append(post_id)
-    if len(ids) > 50:
-        state["recent_post_ids"] = ids[-50:]

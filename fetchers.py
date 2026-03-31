@@ -62,6 +62,23 @@ RSS_SOURCES = [
     {"url": "https://www.inverse.com/rss",                           "source": "Inverse",          "category": "science"},
     {"url": "https://ew.com/feed/",                                  "source": "Entertainment Weekly", "category": "entertainment"},
     {"url": "https://www.indiewire.com/feed/",                       "source": "IndieWire",        "category": "entertainment"},
+
+    # Netflix
+    {"url": "https://usa.newonnetflix.info/feed",                    "source": "New on Netflix",   "category": "entertainment"},
+    {"url": "https://www.theverge.com/rss/netflix/index.xml",        "source": "The Verge Netflix","category": "entertainment"},
+
+    # Sex & Relationships（新規）
+    {"url": "https://www.cosmopolitan.com/sex-love/rss/",            "source": "Cosmo Sex & Love", "category": "sex"},
+    {"url": "https://www.menshealth.com/rss/sex-women.xml",          "source": "Men's Health Sex", "category": "sex"},
+    {"url": "https://www.bustle.com/rss",                            "source": "Bustle",           "category": "sex"},
+
+    # Lifestyle TIPS
+    {"url": "https://www.menshealth.com/rss/all.xml",                "source": "Men's Health",     "category": "lifestyle"},
+
+    # Trivia & Facts（新規）
+    {"url": "https://www.mentalfloss.com/feed",                      "source": "Mental Floss",     "category": "trivia"},
+    {"url": "https://bigthink.com/feed",                             "source": "Big Think",        "category": "trivia"},
+    {"url": "https://knowablemagazine.org/rss",                      "source": "Knowable Magazine","category": "trivia"},
 ]
 
 # ── HackerNews ────────────────────────────────────────────────────────────────

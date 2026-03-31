@@ -1,6 +1,6 @@
 import time
 import requests
-from config import THREADS_USER_ID, THREADS_ACCESS_TOKEN
+from config import THREADS_USER_ID, THREADS_ACCESS_TOKEN, CATEGORY_TAGS
 
 THREADS_API = "https://graph.threads.net/v1.0"
 
@@ -15,7 +15,7 @@ def create_container(text: str, reply_to_id: str = "") -> str | None:
     if reply_to_id:
         params["reply_to_id"] = reply_to_id
 
-    for attempt in range(3):  # 最大3回リトライ
+    for attempt in range(3):
         try:
             res = requests.post(url, params=params, timeout=30)
             data = res.json()
@@ -39,7 +39,7 @@ def publish_container(container_id: str) -> str | None:
         "access_token": THREADS_ACCESS_TOKEN,
     }
 
-    for attempt in range(3):  # 最大3回リトライ
+    for attempt in range(3):
         try:
             res = requests.post(url, params=params, timeout=30)
             data = res.json()
@@ -64,7 +64,7 @@ def refresh_token() -> bool:
         "access_token": THREADS_ACCESS_TOKEN,
     }
 
-    for attempt in range(3):  # 最大3回リトライ
+    for attempt in range(3):
         try:
             res = requests.get(url, params=params, timeout=30)
             data = res.json()
@@ -85,14 +85,20 @@ def refresh_token() -> bool:
     return False
 
 
-def post_tweet(tweet_text: str, original_url: str = "") -> dict:
+def post_tweet(tweet_text: str, original_url: str = "", category: str = "other") -> dict:
     """
     Threadsに投稿する
-    - 本投稿: テキストのみ（URLなし）
+    - 本投稿: テキスト + トピックタグ
     - リプライ: 元記事フルURL
     """
     # URLが本文に含まれている場合は取り除く
     main_text = tweet_text.split("\nhttp")[0].split("\nhttps")[0].strip()
+
+    # カテゴリに応じたトピックタグを付与
+    tag = CATEGORY_TAGS.get(category, "")
+    if tag:
+        main_text = f"{main_text}\n{tag}"
+        print(f"  [Poster] Topic tag: {tag}")
 
     # ① 本投稿コンテナ作成
     container_id = create_container(main_text)
@@ -122,65 +128,3 @@ def post_tweet(tweet_text: str, original_url: str = "") -> dict:
                 print(f"  [Poster] Reply with URL: {reply_id}")
 
     return {"post_id": post_id, "success": True}
-
-
-def _get_own_username() -> str:
-    """自分のユーザー名を取得"""
-    url = f"{THREADS_API}/{THREADS_USER_ID}"
-    params = {
-        "fields":       "username",
-        "access_token": THREADS_ACCESS_TOKEN,
-    }
-    try:
-        res = requests.get(url, params=params, timeout=30)
-        return res.json().get("username", "")
-    except Exception:
-        return ""
-
-
-def get_replies(post_id: str) -> list[dict]:
-    """投稿への返信一覧を取得する（自分の返信は除外・ページネーション対応）"""
-    url = f"{THREADS_API}/{post_id}/conversation"
-    params = {
-        "fields":       "id,text,username,timestamp,is_reply_owned_by_me",
-        "access_token": THREADS_ACCESS_TOKEN,
-        "limit":        100,
-    }
-    all_replies = []
-    try:
-        while url:
-            res = requests.get(url, params=params, timeout=30)
-            data = res.json()
-            all_replies.extend(data.get("data", []))
-            # 次のページがあれば取得
-            url = data.get("paging", {}).get("next")
-            params = {}  # 2ページ目以降はURLにパラメータ込み
-        # is_reply_owned_by_meで自分の返信を除外（公開・非公開問わず確実に判定）
-        filtered = [r for r in all_replies if not r.get("is_reply_owned_by_me", True)]
-        print(f"  [Poster] {len(all_replies)} replies found, {len(filtered)} after filtering own replies")
-        return filtered
-    except Exception as e:
-        print(f"  [Poster] get_replies error: {e}")
-        return []
-
-
-def like_reply(reply_id: str) -> bool:
-    """返信にライクする"""
-    url = f"{THREADS_API}/{reply_id}/likes"
-    params = {
-        "access_token": THREADS_ACCESS_TOKEN,
-    }
-    for attempt in range(3):
-        try:
-            res = requests.post(url, params=params, timeout=30)
-            data = res.json()
-            if data.get("success"):
-                return True
-            print(f"  [Poster] Like error: {data}")
-            return False
-        except requests.exceptions.ReadTimeout:
-            print(f"  [Poster] Timeout on like_reply attempt {attempt + 1}/3")
-            if attempt < 2:
-                time.sleep(5)
-    print(f"  [Poster] like_reply failed after 3 attempts")
-    return False

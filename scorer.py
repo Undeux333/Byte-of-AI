@@ -12,39 +12,47 @@ client = genai.Client(api_key=GEMINI_API_KEY)
 
 # ── Rule-based pre-scoring ────────────────────────────────────────────────────
 HIGH_VALUE_SOURCES = {
-    # World News
-    "BBC World": 28, "Reuters": 28, "NYT World": 26, "NPR News": 26,
-    "The Guardian": 22, "Al Jazeera": 22,
-    # Tech
-    "HackerNews": 24, "TechCrunch": 20, "The Verge": 18,
-    "Ars Technica": 18, "Wired": 18,
-    # Sports
-    "ESPN": 20, "BBC Sport": 20, "The Ringer": 18,
-    # Psychology
-    "Psychology Today": 18, "PsyPost": 17,
-    # Entertainment（若者向け強化）
+    # World News        ── Tier 1: 23〜24
+    "BBC World": 22, "Reuters": 22, "NYT World": 22, "NPR News": 22,
+    "The Guardian": 21, "Al Jazeera": 21,
+    # Tech              ── Tier 2: 20〜22
+    "HackerNews": 22, "TechCrunch": 20, "The Verge": 20,
+    "Ars Technica": 20, "Wired": 20,
+    # Sports            ── Tier 2: 20〜21
+    "ESPN": 21, "BBC Sport": 21, "The Ringer": 20,
+    # Psychology        ── Tier 2: 19〜20
+    "Psychology Today": 20, "PsyPost": 19,
+    # Entertainment     ── Tier 2: 19〜22
     "Billboard": 21, "IGN": 21, "Vulture": 21, "Complex": 21,
     "Polygon": 20, "Kotaku": 20,
-    "Rolling Stone": 17, "Entertainment Weekly": 17, "IndieWire": 15,
-    "Variety": 14, "Deadline": 14,
-    # Lifestyle（若者向け強化）
-    "The Cut": 20, "Cosmopolitan": 20, "Refinery29": 20,
-    "Hypebeast": 18, "Lifehacker": 16,
-    "Upworthy": 15, "Good News Network": 15,
-    # Science
-    "ScienceDaily": 17, "New Scientist": 16, "Inverse": 16,
-    # Business
-    "WSJ": 17,
+    "New on Netflix": 22, "The Verge Netflix": 20,
+    "Rolling Stone": 19, "Entertainment Weekly": 19, "IndieWire": 19,
+    "Variety": 19, "Deadline": 19,
+    # Lifestyle         ── Tier 2: 19〜21
+    "The Cut": 21, "Cosmopolitan": 21, "Refinery29": 20,
+    "Hypebeast": 20, "Lifehacker": 19, "Men's Health": 20,
+    "Upworthy": 19, "Good News Network": 19,
+    # Sex & Relationships ── Tier 1: 22〜23
+    "Cosmo Sex & Love": 21, "Men's Health Sex": 21, "Bustle": 20,
+    # Science           ── Tier 2: 19〜20
+    "ScienceDaily": 20, "New Scientist": 19, "Inverse": 19,
+    # Business          ── Tier 2: 19〜20
+    "WSJ": 20,
+    # Trivia & Facts    ── Tier 2: 20〜22
+    "Mental Floss": 22, "Big Think": 21, "Knowable Magazine": 20,
 }
 
 CATEGORY_BONUS = {
-    "world": 12, "sports": 11, "entertainment": 11,
+    "world": 10, "sports": 11, "entertainment": 11,
     "tech": 10, "science": 10, "psychology": 11,
-    "lifestyle": 10, "business": 8, "other": 5,
+    "lifestyle": 10, "business": 11,
+    "sex": 11,     # 新規（合計37点）
+    "trivia": 12,  # 新規・高優先度
+    "other": 11,
 }
 
 def rule_score(story: dict) -> int:
-    score  = HIGH_VALUE_SOURCES.get(story.get("source", ""), 10)
+    score  = HIGH_VALUE_SOURCES.get(story.get("source", ""), 20)
     score += CATEGORY_BONUS.get(story.get("category", "other"), 5)
     score += min(10, story.get("weight", 5))
     if "HN Score:" in story.get("summary", ""):
@@ -76,13 +84,15 @@ You write like a real human — casual, sharp, and funny without trying too hard
 TARGET AUDIENCE: Americans aged 10-30, male and female equally.
 
 CONTENT MIX — pick at most 2 stories from the same category:
-- Comedy / memes / relatable moments (20%)
-- Work-life balance / job culture (15%)
+- Comedy / memes / relatable moments (15%)
+- Work-life balance / job culture (10%)
 - World news / political irony (15%)
-- Dating / psychology / mental health (15%)
-- Nostalgia / pop culture (10%)
+- Dating / psychology / mental health (10%)
+- Sex / relationships / dating tips (10%)
+- Trivia / surprising facts / "did you know" (10%)
+- Nostalgia / pop culture / Netflix (10%)
 - AI / tech irony (10%)
-- Sports moments (10%)
+- Sports moments (5%)
 - Chaos / food / feel-good / science facts / TIPS (5%)
 
 POST STRUCTURE — 3 parts, natural sentence flow:
@@ -163,6 +173,18 @@ Examples:
 "Anyway I have a meeting in 4 minutes."
 "I just wanted to be normal about it."
 SKIP IF: the pivot requires the news to make sense, or the universal experience feels like a stretch
+
+TYPE E — Rhetorical question
+USE WHEN: the story exposes an obvious contradiction, absurdity, or gap that the reader already senses
+THE MOVE: ask the one question that makes the contradiction undeniable — but never expect an answer.
+The question must answer itself. The reader should think "yeah... exactly."
+Under 10 words. Must work spoken aloud. Never ends with "right?" or "huh?" — too soft.
+Examples:
+"At what point do we start calling it a government?"
+"Who exactly is this helping?"
+"How is this still a debate?"
+SKIP IF: the question needs context to land, sounds accusatory rather than rhetorical,
+or could apply to any story this week
 
 OVERRIDE RULES — apply after diagnosis:
 - If no type passes its own SKIP test → rewrite the body until one does
@@ -279,7 +301,7 @@ Respond ONLY with valid JSON (no markdown, no explanation):
     {{
       "index": <0-based story index>,
       "buzz_score": <0-100>,
-      "landing_type": "<A|B|C|D>",
+      "landing_type": "<A|B|C|D|E>",
       "buzz_score2": <0-100>,
       "rewrite_count": <0-2>,
       "post": "<120-240 chars, no URL, follow all style rules above>"
