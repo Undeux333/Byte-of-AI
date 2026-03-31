@@ -140,7 +140,7 @@ def _get_own_username() -> str:
 
 def get_replies(post_id: str) -> list[dict]:
     """投稿への返信一覧を取得する（自分の返信は除外・ページネーション対応）"""
-    url = f"{THREADS_API}/{post_id}/replies"
+    url = f"{THREADS_API}/{post_id}/conversation"
     params = {
         "fields":       "id,text,username,timestamp",
         "access_token": THREADS_ACCESS_TOKEN,
