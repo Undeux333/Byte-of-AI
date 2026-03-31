@@ -192,17 +192,83 @@ SKIP: policy announcements, summit results, vote counts
 PICK: a leader contradicting their own stated position, a statement that aged badly within 24 hours,
 power doing something absurd in plain sight
 
-BUZZ SCORE CRITERIA:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STORY SELECTION — BUZZ SCORE CRITERIA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Use this to evaluate which stories are worth selecting:
 90-100: Will spark strong opinions, "same" replies, or debates
-70-89: Funny and relatable, will get likes and reposts
-50-69: Interesting but niche audience
+70-89:  Funny and relatable, will get likes and reposts
+50-69:  Interesting but niche audience
 below 50: Skip this story
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+POST QUALITY — SELF EVALUATION (buzz_score2)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Here are {n} news stories. Do TWO things:
+After writing each post, score it on 4 dimensions:
+
+DIMENSION 1 — Instant comprehension (0-25pts)
+Can the reader grasp the point within 2 seconds?
+25: Lands immediately — no rereading needed
+15: Needs one beat to click — acceptable
+5:  Requires rereading or outside context → rewrite
+
+DIMENSION 2 — Landing line quality (0-25pts)
+Evaluate by landing type:
+
+TYPE A (Instant laugh):
+25: Lands before reader sees it coming. Works spoken aloud.
+15: Funny but predictable
+5:  Generic — could apply to any story → rewrite
+
+TYPE B (Delayed laugh):
+25: Direction is clear in 0.5 seconds, key word unsaid
+    ✅ "It's never even met me." — "even" clarifies direction instantly
+    ❌ "It has never met me." — direction ambiguous, needs 2+ seconds
+15: Gap exists but requires 1-2 seconds to fill
+5:  Gap is too wide — reader gives up → rewrite
+
+TYPE C (Sharp read):
+25: Specific to THIS story, sounds like the smartest person speaking
+15: True but slightly generic
+5:  Could apply to any story this week → rewrite
+
+TYPE D (Pivot to self):
+25: Reader thinks "this is about me" within 1 second
+15: Relatable but not immediate
+5:  Pivot feels forced or disconnected → rewrite
+
+DIMENSION 3 — Reply/repost motivation (0-25pts)
+Would a real person interrupt their friend to share this?
+25: Yes — sparks "same", debate, or "send this to someone"
+15: Gets a like but not a share
+5:  Politely ignored → rewrite
+
+DIMENSION 4 — Contraction & voice naturalness (0-25pts)
+Does it sound like a real American speaking, not writing?
+25: Every contraction is correct. Flows like speech.
+15: One stiff phrase (e.g. "I am" instead of "I'm")
+5:  Multiple stiff phrases or written-only expressions → rewrite
+
+FINAL buzz_score2 = sum of 4 dimensions (max 100)
+90-100: Post as-is — will spark strong reactions
+70-89:  Post as-is — will get likes and reposts
+50-69:  REWRITE — identify the weakest dimension and fix it
+below 50: REWRITE — landing and voice both need work
+
+REWRITE RULES:
+- Identify the lowest scoring dimension first
+- Fix only that dimension — do not change what's working
+- Re-score after rewriting
+- Maximum 2 rewrite attempts — if still below 70, post as-is
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Here are {n} news stories. Do THREE things:
 1. Pick the BEST {top_n} stories (max 2 from same category, prioritize buzz_score 70+)
 2. Write ONE post per story following ALL rules above
+3. Self-evaluate each post using buzz_score2 — rewrite if below 70 (max 2 attempts)
 
 Stories:
 {stories}
@@ -214,6 +280,8 @@ Respond ONLY with valid JSON (no markdown, no explanation):
       "index": <0-based story index>,
       "buzz_score": <0-100>,
       "landing_type": "<A|B|C|D>",
+      "buzz_score2": <0-100>,
+      "rewrite_count": <0-2>,
       "post": "<120-240 chars, no URL, follow all style rules above>"
     }}
   ]
@@ -325,6 +393,8 @@ def score_all(stories: list[dict], state: dict) -> list[dict]:
             "short_url":      "",
             "original_url":   story.get("url", ""),
             "buzz_score":     sel.get("buzz_score", 0),
+            "buzz_score2":    sel.get("buzz_score2", 0),
+            "rewrite_count":  sel.get("rewrite_count", 0),
             "original_title": story["title"],
             "url":            story.get("url", ""),
             "source":         story.get("source", ""),
@@ -332,7 +402,8 @@ def score_all(stories: list[dict], state: dict) -> list[dict]:
             "landing_type":   landing_type,
         })
         print(f"  [Scorer] Selected [{story['category']}] {story['title'][:60]}...")
-        print(f"           Type: {landing_type} | Post: {post_raw[:80]}...")
+        print(f"           Type: {landing_type} | buzz_score: {sel.get('buzz_score', 0)} | buzz_score2: {sel.get('buzz_score2', 0)} | rewrites: {sel.get('rewrite_count', 0)}")
+        print(f"           Post: {post_raw[:80]}...")
 
     # 持ち越し候補保存（選ばれなかった上位8件）
     rejected = [c for i, c in enumerate(candidates) if i not in selected_indices]
