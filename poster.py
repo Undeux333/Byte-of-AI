@@ -122,3 +122,41 @@ def post_tweet(tweet_text: str, original_url: str = "") -> dict:
                 print(f"  [Poster] Reply with URL: {reply_id}")
 
     return {"post_id": post_id, "success": True}
+
+
+def get_replies(post_id: str) -> list[dict]:
+    """投稿への返信一覧を取得する"""
+    url = f"{THREADS_API}/{post_id}/replies"
+    params = {
+        "fields":       "id,text,username,timestamp",
+        "access_token": THREADS_ACCESS_TOKEN,
+    }
+    try:
+        res = requests.get(url, params=params, timeout=30)
+        data = res.json()
+        return data.get("data", [])
+    except Exception as e:
+        print(f"  [Poster] get_replies error: {e}")
+        return []
+
+
+def like_reply(reply_id: str) -> bool:
+    """返信にライクする"""
+    url = f"{THREADS_API}/{reply_id}/likes"
+    params = {
+        "access_token": THREADS_ACCESS_TOKEN,
+    }
+    for attempt in range(3):
+        try:
+            res = requests.post(url, params=params, timeout=30)
+            data = res.json()
+            if data.get("success"):
+                return True
+            print(f"  [Poster] Like error: {data}")
+            return False
+        except requests.exceptions.ReadTimeout:
+            print(f"  [Poster] Timeout on like_reply attempt {attempt + 1}/3")
+            if attempt < 2:
+                time.sleep(5)
+    print(f"  [Poster] like_reply failed after 3 attempts")
+    return False

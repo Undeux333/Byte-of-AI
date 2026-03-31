@@ -71,7 +71,7 @@ def run():
         print("[Pipeline] Collection not needed yet.\n")
 
     # ── Step 2: 投稿（2件）──────────────────────────────────────────────
-    for post_num in range(1, 3):  # 1件目、2件目
+    for post_num in range(1, 3):
         item = sm.pop_next(state)
         if not item:
             print(f"[Pipeline] Queue empty at post {post_num} — stopping.")
@@ -96,11 +96,12 @@ def run():
             )
             if result.get("success"):
                 sm.mark_posted(state)
+                sm.add_recent_post_id(state, result["post_id"])
                 print(f"[Pipeline] Post {post_num} succeeded!")
             else:
                 state["queue"].insert(0, item)
                 print(f"[Pipeline] Post {post_num} failed — item returned to queue.")
-                break  # 失敗したら2件目は試みない
+                break
 
         # 2件目の前に5分待機（連投対策）
         if post_num == 1:
@@ -110,6 +111,31 @@ def run():
     sm.save(state)
     stats = sm.get_stats(state)
     print(f"\n[Stats] Queue={stats['queue_size']} TotalPosted={stats['total_posted']}")
+
+    # ── Step 3: ライク処理 ──────────────────────────────────────────────
+    if not DRY_RUN:
+        print(f"\n[Engage] Starting like process...")
+        post_ids  = sm.get_recent_post_ids(state)
+        liked_ids = sm.get_liked_reply_ids(state)
+        total_liked = 0
+
+        for post_id in post_ids:
+            replies = poster.get_replies(post_id)
+            if not replies:
+                continue
+            for reply in replies:
+                reply_id = reply.get("id", "")
+                if not reply_id or reply_id in liked_ids:
+                    continue
+                success = poster.like_reply(reply_id)
+                if success:
+                    sm.add_liked_reply_id(state, reply_id)
+                    total_liked += 1
+                    print(f"  [Engage] Liked reply: {reply_id}")
+                    time.sleep(1)
+
+        sm.save(state)
+        print(f"[Engage] Done. Total liked: {total_liked}")
 
 if __name__ == "__main__":
     run()
