@@ -2,26 +2,6 @@
   "last_collected": "2026-03-31T05:24:51.607464+00:00",
   "queue": [
     {
-      "tweet": "Fred again.. just dropped a historic set with Thomas Bangalter from Daft Punk. I'm sitting here in sweatpants and haven't left my couch all day.",
-      "original_url": "https://hypebeast.com/2026/3/watch-fred-again-historic-live-set-with-daft-punk-thomas-bangalter",
-      "buzz_score": 88,
-      "buzz_score2": 100,
-      "rewrite_count": 0,
-      "original_title": "Watch Fred Again..'s Historic Live Set With Daft Punk's Thomas Bangalter",
-      "source": "Hypebeast",
-      "category": "entertainment"
-    },
-    {
-      "tweet": "Wired is running deep dives on how to snag T-Mobile promo codes for your business. The newsletter and the journalism are different documents.",
-      "original_url": "https://www.wired.com/story/t-mobile-business-promo-code/",
-      "buzz_score": 72,
-      "buzz_score2": 100,
-      "rewrite_count": 0,
-      "original_title": "T-Mobile Business Promo Codes and Deals",
-      "source": "Wired",
-      "category": "tech"
-    },
-    {
       "tweet": "OpenAI is now letting Copilot inject ads into your code. I am sure our software definitely needed more revenue streams and fewer working features. The product and the profit model are different documents.",
       "original_url": "https://notes.zachmanson.com/copilot-edited-an-ad-into-my-pr/",
       "buzz_score": 95,
@@ -1082,13 +1062,15 @@
   ],
   "carryover_candidates": [],
   "stats": {
-    "total_posted": 31,
+    "total_posted": 33,
     "total_collected": 40
   },
   "recent_post_ids": [
     "18397670413148666",
     "18086758415002309",
     "18073919630635492",
-    "18419284885127837"
+    "18419284885127837",
+    "18042938006780281",
+    "18213015463321087"
   ]
 }
