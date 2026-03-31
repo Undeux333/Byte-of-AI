@@ -2,22 +2,6 @@
   "last_collected": "2026-03-31T02:38:11.034509+00:00",
   "queue": [
     {
-      "tweet": "Eidos Montreal just lost 124 people after 19 years of building the Deus Ex series. I mean, who needs job security when you have corporate synergy. Just business as usual.",
-      "original_url": "https://kotaku.com/eidos-montreal-deus-ex-sequel-layoffs-2000683242",
-      "buzz_score": 80,
-      "original_title": "Deus Ex Studio Head Leaves After 19 Years As 124 People Lose Their Jobs",
-      "source": "Kotaku",
-      "category": "entertainment"
-    },
-    {
-      "tweet": "Sony is hiking the PS5 price to $600 and the Pro version to $900. I guess they really want us to just go outside and touch grass.",
-      "original_url": "https://www.billboard.com/culture/product-recommendations/sony-playstation-5-pro-where-to-buy-online-1235772826/",
-      "buzz_score": 95,
-      "original_title": "Last Chance: Where to Shop Sony PlayStation 5 Consoles Online Before the $150 Price Hike",
-      "source": "Billboard",
-      "category": "entertainment"
-    },
-    {
       "tweet": "Baseball is using a robo-judge to call strikes, and players are finally getting the accurate calls they deserve. Respect the commitment.",
       "original_url": "https://kotaku.com/baseball-players-are-using-a-new-robo-judge-to-instantly-humiliate-shame-umpires-and-crowds-are-going-wild-2000683267",
       "buzz_score": 90,
@@ -1078,7 +1062,7 @@
   ],
   "carryover_candidates": [],
   "stats": {
-    "total_posted": 23,
+    "total_posted": 25,
     "total_collected": 32
   }
 }
